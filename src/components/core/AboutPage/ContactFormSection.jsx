@@ -8,12 +8,11 @@ const ContactFormSection = () => {
           <h3 className="text-richblack-5 font-semibold text-4xl">Get in Touch</h3>
           <p className="text-richblack-300 font-medium text-base mt-2">We’d love to here for you, Please fill out this form.</p>
         </div>
-        <form>
-          <label>
+        
+           <div>
             
-          </label>
-        </form>
-      </div>
+          </div>
+        </div>
     </div>
   );
 };

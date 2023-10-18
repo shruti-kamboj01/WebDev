@@ -58,6 +58,7 @@ const Navbar = () => {
   useEffect(() => {
     fetchSublinks();
   },[])
+  console.log("sub links", subLinks)
 
   return (
     <div className={`flex h-14 items-center justify-center border-b-[1px] border-b-richblack-700

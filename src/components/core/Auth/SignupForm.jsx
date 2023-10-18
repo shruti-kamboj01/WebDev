@@ -37,7 +37,10 @@ const SignupForm = () => {
   }
 
   const handleOnSubmit = (e) =>{
-    e.preventDefalut()
+    
+    e.preventDefalut();
+    console.log("Printing form data");
+    console.log(formData);
     if(password !== confirmPassword) {
       toast.error("Password Do Not Match")
       return
@@ -46,6 +49,7 @@ const SignupForm = () => {
       ...formData,
       accountType,
     }
+   
     // Setting signup data to state
     // To be used after otp verification
     dispatch(setSignupData(signupData))
