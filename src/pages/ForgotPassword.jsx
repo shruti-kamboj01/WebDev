@@ -1,35 +1,49 @@
 import React, { useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom';
 import {BsArrowLeft} from 'react-icons/bs'
+
+import { getPasswordResetToken } from "../services/operations/authAPI"
 
 const ForgotPassword = () => {
 
     //destructure loading from auth
     const {loading} = useSelector((state) => state.auth);
+
     const [email, setEmail] = useState("");
     const[emailSent, setEmailSent] = useState(false);
+    const dispatch = useDispatch()
+  
+  
+    const handleOnSubmit = (e) => {
+      e.preventDefault()
+      //backend call - getPasswordResetToken controller is called and passed email and setEmailSend function to it
+      //why setEmailSent function -> so that jab email send ho jaye to 'emailsent' wala state update ho aur 'check your email' wala page
+      // show hone lage
+
+      dispatch(getPasswordResetToken(email, setEmailSent))
+    }
 
   return (
-    <div className='max-w-[500px] mx-auto flex items-center justify-center py-36'>
+    <div className='flex h-[89vh] justify-center items-center'>
         {
             loading ? (
                <div>Loading...</div>
             ) : (
-                <div className='flex flex-col justify-center items-center font-inter'>
-                    <h1 className='text-richblack-5 font-semibold text-3xl mb-6'>
+                <div className='max-w-[500px] p-4 lg:p-8 font-inter '>
+                    <h1 className='text-richblack-5 font-semibold text-3xl mb-6 '>
                     {
                         !emailSent ? "Reset your Password" : "Check your email"
                     }
                     </h1>
-                    <p className='text-richblack-100 font-normal text-base w-[75%] ml-4 mb-4'>
+                    <p className='text-richblack-100  font-normal text-base w-[75%] my-4'>
                         {
                             !emailSent ? 
                             "Have no fear. We’ll email you instructions to reset your password.you dont have access to your email we can try account recovery"
                             :`We have sent the reset email to ${email}`
                         }
                     </p>
-                    <form>
+                    <form onSubmit={handleOnSubmit}>
                         {
                             !emailSent && (
                                 <label>
@@ -42,7 +56,9 @@ const ForgotPassword = () => {
                                 </label>
                             )
                         }
-                        <button className='bg-yellow-50 text-richblack-900 text-center font-medium text-base p-2 rounded-md items-center w-full mb-6'>
+                        <button 
+                        type='submit' 
+                        className='bg-yellow-50  text-richblack-900  font-medium text-base p-2 rounded-md  w-full mb-6'>
                             {
                                 !emailSent ? "Reset Password" : "Resend Email"
                             }

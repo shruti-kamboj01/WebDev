@@ -21,7 +21,7 @@ function LoginForm() {
   }
 
   const onSubmitHandler =(e) => {
-       e.preventDefalut()
+       e.preventDefault()
        dispatch(login(email, password, navigate))
   }
 

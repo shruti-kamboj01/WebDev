@@ -37,8 +37,7 @@ const SignupForm = () => {
   }
 
   const handleOnSubmit = (e) =>{
-    
-    e.preventDefalut();
+    e.preventDefault();
     console.log("Printing form data");
     console.log(formData);
     if(password !== confirmPassword) {
@@ -120,7 +119,7 @@ const SignupForm = () => {
               Email Address<sup className="text-pink-200">*</sup>
             </p>
             <input type='email'
-              name='lastName'
+              name='email'
               value={email}
               onChange={handleOnChange}
               placeholder='Enter email address'

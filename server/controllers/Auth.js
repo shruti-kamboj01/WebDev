@@ -178,7 +178,7 @@ exports.signUp = async(req, res) => {
 exports.login = async(req,res) => {
     try{
         //get data from req body
-        console.log(req.body);
+        // console.log(req.body);
         const {email,password} = req.body;
 
         //validation data
