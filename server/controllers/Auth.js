@@ -21,7 +21,7 @@ exports.sendOTP = async(req,res)=> {
          //if user already exist, then return a response
          if(checkUserPresent) {
             return res.status(401).json({
-               succuess:false,
+               success:false,
                message:'User already registered',
             })
          }
@@ -57,7 +57,7 @@ exports.sendOTP = async(req,res)=> {
     
     //return response successfylly
     res.status(200).json({
-        succuess:true,
+        success:true,
         message:'OTP Sent Successfully',
         otp,
     })

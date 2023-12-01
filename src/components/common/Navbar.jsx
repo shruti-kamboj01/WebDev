@@ -48,7 +48,7 @@ const Navbar = () => {
     setLoading(true);
     try{
          const result = await apiConnector("GET", categories.CATEGORIES_API);
-         console.log("Printing Sublinks result:" , result);
+        //  console.log("Printing Sublinks result:" , result);
          setSubLinks(result.data.data);
     }catch(error) {
       console.log("Could not fetch the category list",error); 
@@ -58,7 +58,7 @@ const Navbar = () => {
   useEffect(() => {
     fetchSublinks();
   },[])
-  console.log("sub links", subLinks)
+  // console.log("sub links", subLinks)
 
   return (
     <div className={`flex h-14 items-center justify-center border-b-[1px] border-b-richblack-700

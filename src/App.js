@@ -26,7 +26,7 @@ function App() {
             <Login />
           </OpenRoute>
           }/>
-        <Route path="/signUp" 
+        <Route path="/signup" 
         element ={
           <OpenRoute>
             <SignUp/>

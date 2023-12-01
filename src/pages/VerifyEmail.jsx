@@ -42,6 +42,7 @@ const VerifyEmail = () => {
         )
     );
   }
+ 
 
   return (
     <div>
@@ -76,19 +77,17 @@ const VerifyEmail = () => {
                 gap: "0 6px",
               }}
             />
-          </form>
-
-          <button type="submit"
+            <button type="submit"
           className="bg-yellow-50  text-richblack-900  font-medium text-base p-2 rounded-md mt-4 w-full mb-6">
             {" "}
             Verify Email
           </button>
-          
-          <div className="text-richblack-100">
-            <Link to="/login">
+          </form>
+           <div className="text-richblack-100">
+            <Link to="/signUp">
               <p className="flex gap-2 items-center">
                 <BiArrowBack />
-                Back to login
+                Back to Signup
               </p>
             </Link>
             <button className="text-blue-100"

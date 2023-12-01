@@ -38,8 +38,8 @@ const SignupForm = () => {
 
   const handleOnSubmit = (e) =>{
     e.preventDefault();
-    console.log("Printing form data");
-    console.log(formData);
+    // console.log("Printing form data");
+    // console.log(formData);
     if(password !== confirmPassword) {
       toast.error("Password Do Not Match")
       return
@@ -52,6 +52,7 @@ const SignupForm = () => {
     // Setting signup data to state
     // To be used after otp verification
     dispatch(setSignupData(signupData))
+   
     // Send OTP to user for verification
     dispatch(sendOtp(formData.email, navigate))
 
@@ -85,7 +86,7 @@ const SignupForm = () => {
     {/* Tab */}
       <Tab tabData={tabData} field={accountType} setField={setAccountType} />
       {/* Form */}
-      <form onSubmit={handleOnSubmit} className='flex w-full flex-col gap-y-4'>
+      <form onSubmit={handleOnSubmit} className='flex w-fit flex-col gap-y-4'>
         <div className='flex gap-x-4'>
           <label>
             <p className="mb-1 text-sm leading-6 text-richblack-5">
@@ -99,7 +100,7 @@ const SignupForm = () => {
               className="form-style w-full"
             />
           </label>
-          <label className="mb-1 text-sm leading-6 text-richblack-5">
+          <label className="mb-1 text-sm mt-1 leading-6 text-richblack-5">
             <p>
               Last Name<sup className="text-pink-200">*</sup>
             </p>
@@ -181,7 +182,7 @@ const SignupForm = () => {
          <button 
            type='submit'
            className='bg-yellow-50 text-richblack-900 rounded-md py-2 px-3  mt-6 font-medium'
-           >Login
+           >Create Account
          </button>
         
       </form>
