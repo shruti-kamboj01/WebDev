@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react'
 import {useForm} from 'react-hook-form'
 import { apiConnector } from '../../../services/apiconnector';
 import {contactusEndpoint} from "../../../services/apis"
-import {countrycode} from "../../../data/countrycode.json"
+import countrycode from "../../../data/countrycode.json"
 
 
 const ContactUsForm = () => {
@@ -38,9 +38,9 @@ const ContactUsForm = () => {
                 dropdown:"",
                 message:"",
                 phoneNo:"",
-            },[reset,isSubmitSuccessful])
+            })
         }
-    })
+    },[reset,isSubmitSuccessful])
 
   return (
         <div className='max-w-maxContent lg:w-[40%] w-[69%] mx-auto'>
@@ -83,12 +83,14 @@ const ContactUsForm = () => {
             </label>
          </div>
 
-          <label>
+          <label className='w-full'>
           <p className='label-style'>Phone Number</p>
+          <div className='flex flex-row gap-2'>
           <select
             name='dropdown'
             id='dropdown'
             {...register("countrycode", {required:true})}
+            className='w-[20%] form-style'
            >
                {
                 countrycode.map((ele, i) => {
@@ -99,18 +101,28 @@ const ContactUsForm = () => {
                     )
                 })
             }
+            </select>
           <input
                 type='number'
                 name='phonenumber'
                 id='phonenumber'
                 placeholder='1234567890'
-                className='form-style'
-                {...register("countrycode", {required:true})}
-
-            />
-          </select>
-          
-          </label>
+                className='form-style w-full'
+                {...register("phoneNo", {required:{
+                 value: true,
+                 message:"Please enter your Phone Number.",
+                 },
+                 maxLength:{value:12, message:"Invaid Phone number"},
+                 minLength:{value:10, message:"Invalid Phone Number"},
+                })}
+                 />
+          </div>
+          {errors.phoneNo && (
+          <span className="-mt-1 text-[12px] text-yellow-100">
+            {errors.phoneNo.message}
+          </span>
+        )}
+         </label>
 
 
          <label className='flex flex-col  w-full  gap-2'>
