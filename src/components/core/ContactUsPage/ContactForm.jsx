@@ -28,7 +28,7 @@ const contactDetails = [
 const ContactForm = () => {
     
   return (
-    <div className='flex sm:flex-col gap-16 mt-10'>
+    <div className='flex sm:flex-col lg:flex-row gap-16 mt-10'>
     {/* contactUs details */}
         <div className='text-richblack-300 flex flex-col gap-5 lg:w-[40%] h-[50%] bg-richblack-800 rounded-xl lg:p-6 p-8'>
         {
