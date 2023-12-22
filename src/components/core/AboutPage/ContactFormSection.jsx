@@ -10,7 +10,7 @@ const ContactFormSection = () => {
           <p className="text-richblack-300 font-medium text-base mt-2">We’d love to here for you, Please fill out this form.</p>
         </div>
         
-           <div>
+           <div className="w-[50%]  mx-auto ">
             <ContactUsForm/>
           </div>
         </div>
