@@ -10,6 +10,9 @@ import ContactUs from "./pages/ContactUs";
 import ForgotPassword from "./pages/ForgotPassword";
 import UpdatePassword from "./pages/UpdatePassword";
 import VerifyEmail from "./pages/VerifyEmail";
+import PrivateRoute from "./components/core/Auth/PrivateRoute";
+import Dashboard from './pages/Dashboard'
+import MyProfile from "./components/core/Dashboard/MyProfile";
 
 function App() {
 
@@ -20,6 +23,7 @@ function App() {
         <Route path="/" element={<Home/>}/>
         <Route path="/about" element={<About/>}/>
         <Route path="/contact" element={<ContactUs/>}/>
+        {/* Open Route- only for non-authenticated user */}
         <Route path="/login"
          element ={
           <OpenRoute>
@@ -51,6 +55,17 @@ function App() {
               <VerifyEmail />
             </OpenRoute>
           } />
+
+        {/* Private Routes- Only for authenticated user */}
+        <Route
+          element={
+            <PrivateRoute>
+              <Dashboard/>
+            </PrivateRoute>
+          }
+        />
+        {/* Route for all authenticated users */}
+        <Route path="dashboard/my-profile" element={MyProfile} />
       </Routes>
    </div>
   );
