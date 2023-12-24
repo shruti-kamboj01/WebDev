@@ -14,6 +14,7 @@ import PrivateRoute from "./components/core/Auth/PrivateRoute";
 import Dashboard from './pages/Dashboard'
 import MyProfile from "./components/core/Dashboard/MyProfile";
 import Error from './pages/Error'
+import Settings from './components/core/Dashboard/Settings/Index'
 
 function App() {
 
@@ -66,12 +67,10 @@ function App() {
           }>
            {/* Route for all authenticated users */}
         <Route path="dashboard/my-profile" element={<MyProfile/>} />
-        
-        </Route>
+        <Route path="dashboard/settings" element={<Settings/>}/>
+       </Route>
        
-
-
-        {/* 404 Page */}
+       {/* 404 Page */}
         <Route path="*" element={<Error />} />
       </Routes>
    </div>

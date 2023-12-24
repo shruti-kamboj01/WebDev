@@ -21,7 +21,7 @@ const SidebarLink = ({link, iconName}) => {
   return (
     // active link will be shown through matchroute
     // agar link.path match hokar true return karega to yellow color show hoga
-    <NavLink to={link.path} className={`relativr px-8 py-2 text-sm font-medium ${matchRoute(link.path)
+    <NavLink to={link.path} className={`relative px-8 py-2 text-base font-medium ${matchRoute(link.path)
      ? "bg-yellow-800 text-yellow-50" : " bg-opacity-0 text-richblack-300"}
      transition-all duration-200`}>
      {/* side yellow border in very tab */}
@@ -29,7 +29,7 @@ const SidebarLink = ({link, iconName}) => {
      className={`absolute left-0 top-0 h-full w-[0.15rem] bg-yellow-50
      ${matchRoute(link.path) ? "opacity-100": "opacity-0"}`}></span>
 
-     <div className='flex items-center'>
+     <div className='flex items-center gap-2'>
         <Icon className="text-lg"/>
         <span>{link.name}</span>
      </div>

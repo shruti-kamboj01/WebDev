@@ -19,16 +19,16 @@ const Sidebar = () => {
 
     if(authLoading || profileLoading) {
         return(
-            <div className='grid min-h-[calc(100vh-3.5rem)] place-items-center'>
+            <div className='grid min-h-[100vh] place-items-center'>
                 <div className='spinner'></div>
             </div>
         )
     }
 
   return (
-    <div className='bg-richblack-800 w-[30%] flex flex-col border-r-[1px] border-richblack-700
-                   h-[calc[100vh-3.5]] '>
-        <div>
+    <div className='bg-richblack-800 lg:w-[15%] w-[30%] flex flex-col border-r-[1px] border-richblack-700
+                   h-[100vh]'>
+        <div className='mt-10 flex flex-col '>
             {
                 sidebarLinks.map((link,index) => {
                     if(link.type && user?.accountType !== link.type) return null;
@@ -54,10 +54,10 @@ const Sidebar = () => {
             btn2Text:"Cancel",
             btn1Handler:() =>dispatch(logout(navigate)),
             btn2Handler:() =>setConfirmationModal(null),
-        })}>
-            <div className='flex flex-row gap-2 text-richblack-400'>
-                <VscSignOut/>
-                <h1>Logout</h1>
+        })} >
+            <div className='flex flex-row gap-2 px-8 py-2 text-base font-medium items-center text-richblack-400 '>
+                <VscSignOut size={20}/>
+                <h1 className=''>Logout</h1>
             </div>
         </button>
         {confirmationModal && <ConfirmationModal modalData={confirmationModal}/>}

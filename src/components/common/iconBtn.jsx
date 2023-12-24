@@ -5,7 +5,7 @@ const IconBtn = ({
     onclick,
     children,
     disabled,
-    outLine=false,
+    outline=false,
     custonClasses,
     type,
 }) => {
@@ -13,12 +13,16 @@ const IconBtn = ({
     <button
     disabled={disabled}
     onClick= {onclick}
-    type= {type}>
-  
+    type= {type}
+    className={`flex gap-3 text-xl font-medium items-center  ${
+        outline ? "border border-yellow-50 bg-transparent" : "bg-yellow-50"
+      } py-2 px-3 rounded-md`}>
+    
+
         {
             children ? (
                 <>
-                  <span>
+                  <span className={`${outline && "text-yellow-50"}`}>
                      {text}
                   </span>
                      {children}
