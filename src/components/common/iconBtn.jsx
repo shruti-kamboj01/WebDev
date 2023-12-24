@@ -1,6 +1,6 @@
 import React from 'react'
 
-const iconBtn = ({
+const IconBtn = ({
     text,
     onclick,
     children,
@@ -10,10 +10,11 @@ const iconBtn = ({
     type,
 }) => {
   return (
-    <button>
+    <button
     disabled={disabled}
     onClick= {onclick}
-    type= {type}
+    type= {type}>
+  
         {
             children ? (
                 <>
@@ -29,4 +30,4 @@ const iconBtn = ({
   )
 }
 
-export default iconBtn
+export default IconBtn

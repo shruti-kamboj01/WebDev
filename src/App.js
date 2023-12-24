@@ -13,6 +13,7 @@ import VerifyEmail from "./pages/VerifyEmail";
 import PrivateRoute from "./components/core/Auth/PrivateRoute";
 import Dashboard from './pages/Dashboard'
 import MyProfile from "./components/core/Dashboard/MyProfile";
+import Error from './pages/Error'
 
 function App() {
 
@@ -62,10 +63,16 @@ function App() {
             <PrivateRoute>
               <Dashboard/>
             </PrivateRoute>
-          }
-        />
-        {/* Route for all authenticated users */}
-        <Route path="dashboard/my-profile" element={MyProfile} />
+          }>
+           {/* Route for all authenticated users */}
+        <Route path="dashboard/my-profile" element={<MyProfile/>} />
+        
+        </Route>
+       
+
+
+        {/* 404 Page */}
+        <Route path="*" element={<Error />} />
       </Routes>
    </div>
   );

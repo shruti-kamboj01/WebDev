@@ -1,21 +1,21 @@
 import React from 'react'
 import * as Icons from "react-icons/vsc"
-import { useDispatch } from 'react-redux';
-import { useLocation, NavLink } from 'react-router-dom';
+// import { useDispatch } from 'react-redux';
+import { useLocation, NavLink, matchPath } from 'react-router-dom';
 
 
-const SidebarLink = ({link, iconNane}) => {
+const SidebarLink = ({link, iconName}) => {
     
     // when we get iconName as children, this is how we can render that
-    const Icon = Icons[iconNane];
+    const Icon = Icons[iconName];
     const location = useLocation();
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
     
     // matchroute is matching path that we entered with pathname in url
     // this will always be used when we want to show any tab active
     // same thing used in navbar also
     const matchRoute = (route) => {
-        return matchRoute({path:route}, location.pathname);
+        return matchPath({path:route}, location.pathname);
     }
 
   return (

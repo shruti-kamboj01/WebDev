@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import SidebarLink from './SidebarLink'
 import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
+import ConfirmationModal from '../../common/ConfirmationModal'
 
 const Sidebar = () => {
 
@@ -42,7 +43,7 @@ const Sidebar = () => {
 
         <div className='flex flex-col'>
             <SidebarLink link={{name:"Settings", path:"dashboard/settings"}}
-                iconNane="VscSettingsGear"
+                iconName="VscSettingsGear"
             />
         </div>
 
@@ -53,9 +54,15 @@ const Sidebar = () => {
             btn2Text:"Cancel",
             btn1Handler:() =>dispatch(logout(navigate)),
             btn2Handler:() =>setConfirmationModal(null),
-
-        })}></button>
+        })}>
+            <div className='flex flex-row gap-2 text-richblack-400'>
+                <VscSignOut/>
+                <h1>Logout</h1>
+            </div>
+        </button>
+        {confirmationModal && <ConfirmationModal modalData={confirmationModal}/>}
     </div>
+  
   )
 }
 
