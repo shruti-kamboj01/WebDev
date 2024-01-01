@@ -1,13 +1,16 @@
 const Course = require("../models/Course");
 const Profile = require("../models/Profile");
 const User = require("../models/User");
+const mongoose = require("mongoose")
 const { uploadImageToCloudinary} = require("../utils/imageUploader");
 
 //update profile
 exports.updatedProfile = async(req,res) => {
     try{
         //get data
-        const {dateOfBirth = "", about ="", gender="", contactNumber} = req.body;
+        const { dateOfBirth = "", 
+        about = "", gender= "", 
+        contactNumber= "", } = req.body;
         //get userId
         const id = req.user.id;
         //validations
@@ -15,7 +18,11 @@ exports.updatedProfile = async(req,res) => {
         // find profile by id
         const userDetails = await User.findById(id);
         const profile = await Profile.findById(userDetails.additionalDetails);
+
+        
         //update the profile details
+        
+        
         profile.dateOfBirth = dateOfBirth;
         profile.about = about;
         profile.contactNumber = contactNumber;
@@ -24,11 +31,17 @@ exports.updatedProfile = async(req,res) => {
         // update db entry by save function because we only updated the function...not created aby function in db 
         await profile.save();
 
+          // Find the updated user details
+          const updatedUserDetails = await User.findById(id)
+          .populate("additionalDetails")
+          .exec()
+
         //return response
         return res.json({
             success:true,
             message:"Profile Updated Successfully",
             profile,
+            updatedUserDetails,
         })
     }catch(error) {
         console.log(error);
@@ -45,9 +58,9 @@ exports.deleteAccount = async(req,res) => {
         //schedule task for later
         //fetch id
         const userId = req.user.id;
-        const {courseId} = req.body;
+       
         //find the user that needs to be deleted
-        const user = await User.findById({_id:userId}).populate("courses").exec();
+        const user = await User.findById({_id:userId})
             if(!user) {
                 return res.status(401).json({
                     success:false,
@@ -56,18 +69,18 @@ exports.deleteAccount = async(req,res) => {
             }
 
         //delete the assosiated profile with the user
-        await Profile.findByIdAndDelete({_id: user.additionalDetails});
+        await Profile.findByIdAndDelete({_id: new mongoose.Types.ObjectId(user.additionalDetails)});
 
         //unenroll user from all the enrolled courses
-        await Course.findByIdAndUpdate(
-            {_id:courseId},
-            {
-                $pull:{
-                    // pull this userId from studentEnrolled array that exists in courses
-                    studentEnrolled:userId,
-                },
-            }
-        )
+        // await Course.findByIdAndUpdate(
+        //     {_id:courseId},
+        //     {
+        //         $pull:{
+        //             // pull this userId from studentEnrolled array that exists in courses
+        //             studentEnrolled:userId,
+        //         },
+        //     }
+        // )
 
         //delete user
         await User.findByIdAndDelete({_id:userId});

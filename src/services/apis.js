@@ -27,3 +27,11 @@ export const categories = {
 export const contactusEndpoint = {
   CONTACT_US_API: BASE_URL + "/reach/contact",
 }
+
+//PROFILE API
+export const profileEndpoints = {
+  DELETE_PROFLIE: BASE_URL + "/profile/deleteProfile",
+  UPDATE_PROFILE:BASE_URL + "/profile/updateProfile",
+  UPDATE_DISPLAY_PICTURE: BASE_URL + "/profile/updateDisplayPicture",
+  UPDATE_PASSWORD_API: BASE_URL + "/auth/changepassword"
+ }

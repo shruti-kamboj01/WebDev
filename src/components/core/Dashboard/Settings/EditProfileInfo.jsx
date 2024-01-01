@@ -1,176 +1,195 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { updateProfile } from "../../../../services/operations/profileAPI";
+import IconBtn from "../../../common/IconBtn";
+import { useNavigate } from "react-router-dom";
 
 const EditProfileInfo = () => {
   const { user } = useSelector((state) => state.profile);
-  console.log(user);
+  const {token} = useSelector((state) => state.auth);
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  // console.log(user);
+  // console.log("date of birth is " + user?.additionalDetails?.dateOfBirth)
 
   const {
     register,
-    submitHandler,
-    formState: { error },
+    handleSubmit,
+    formState: { errors },
   } = useForm();
 
-  return (
-    <div>
-      <form
-        onSubmit={submitHandler}
-        className="flex flex-col gap-x-4 px-6  mt-8 py-4 rounded-md border-[1px] border-richblack-500 bg-richblack-800"
-      >
-        <p className="text-white font-semibold text-lg">Profile Information</p>
-        <div className="flex gap-x-2">
-          <div className="flex flex-col">
-            <label htmlFor="firstName" className="label-style">
-              First Name
-            </label>
-            <input
-              type="text"
-              name="firstName"
-              id="firstName"
-              className="form-style"
-              disabled
-              {...register("firstName", { required: true })}
-              defaultValue={user?.firstName}
-            />
-          </div>
-          <div className="flex flex-col">
-            <label htmlFor="lastName" className="label-style">
-              Last Name
-            </label>
-            <input
-              type="text"
-              name="lastName"
-              id="lastName"
-              className="form-style"
-              disabled
-              {...register("lastName", { required: true })}
-              defaultValue={user?.lastName}
-            />
-          </div>
-        </div>
+  const genders = ["Female", "Male", "Other", "Prefer not to say"] 
 
-        <div className="flex gap-x-2">
-          <div className="flex flex-col">
-            <label htmlFor="dateOfBirth" className="label-style">
-              Date of Birth
-            </label>
-            <input
-              type="date"
-              name="dateOfBirth"
-              id="dateOfBirth"
-              className="form-style w-full"
-              {...register("dateOfBirth", { required: true })}
-              defaultValue={user?.additionalDetails?.dateOfBirth}
-            />
-            {error.dateOfBirth && (
-              <span className="text-[12px] text-yellow-100">
-                Please enter your DateOfBirth.
-              </span>
-            )}
+  const submitProfileForm = async (data) => {
+    console.log("Form Data - ", data)
+    try {
+      dispatch(updateProfile(token, data))
+    } catch (error) {
+      console.log("ERROR MESSAGE - ", error.message)
+    }
+  }
+  return (
+    <>
+      <form onSubmit={handleSubmit(submitProfileForm)}>
+        {/* Profile Information */}
+        <div className="my-10 flex flex-col gap-y-6 rounded-md border-[1px] border-richblack-700 bg-richblack-800 p-8 px-12">
+          <h2 className="text-lg font-semibold text-richblack-5">
+            Profile Information
+          </h2>
+          <div className="flex flex-col gap-5 lg:flex-row">
+            <div className="flex flex-col gap-2 lg:w-[48%]">
+              <label htmlFor="firstName" className="label-style">
+                First Name
+              </label>
+              <input
+                type="text"
+                name="firstName"
+                id="firstName"
+                placeholder="Enter first name"
+                className="form-style"
+                {...register("firstName")}
+                defaultValue={user?.firstName}
+                disabled
+              />
+            
+            </div>
+            <div className="flex flex-col gap-2 lg:w-[48%]">
+              <label htmlFor="lastName" className="label-style">
+                Last Name
+              </label>
+              <input
+                type="text"
+                name="lastName"
+                id="lastName"
+                placeholder="Enter first name"
+                className="form-style"
+                {...register("lastName")}
+                defaultValue={user?.lastName}
+                disabled
+              />
+              
+            </div>
           </div>
-          {/* <div className="flex flex-col"> */}
-            {/* <label htmlFor="gender" className="label-style">
-              Gender
-            </label>
-            <div className="form-style w-full flex gap-x-4">
+
+          <div className="flex flex-col gap-5 lg:flex-row">
+            <div className="flex flex-col gap-2 lg:w-[48%]">
+              <label htmlFor="dateOfBirth" className="label-style">
+                Date of Birth
+              </label>
               <input
-                type="radio"
-                name="gender"
-                id="male"
-                className=""
-                {...register("gender", { required: true })}
-                defaultValue={user?.gender}
+                type="date"
+                name="dateOfBirth"
+                id="dateOfBirth"
+                className="form-style"
+                {...register("dateOfBirth", {
+                  required: {
+                    value: true,
+                    message: "Please enter your Date of Birth.",
+                  },
+                  max: {
+                    value: new Date().toISOString().split("T")[0],
+                    message: "Date of Birth cannot be in the future.",
+                  },
+                })}
+                defaultValue={user?.additionalDetails?.dateOfBirth}
               />
-              <label htmlFor="male">Male</label>
-              <input
-                type="radio"
+              {errors.dateOfBirth && (
+                <span className="-mt-1 text-[12px] text-yellow-100">
+                  {errors.dateOfBirth.message}
+                </span>
+              )}
+            </div>
+            <div className="flex flex-col gap-2 lg:w-[48%]">
+              <label htmlFor="gender" className="label-style">
+                Gender
+              </label>
+              <select
+                type="text"
                 name="gender"
-                id="female"
-                className="before:content[''] peer relative h-5 w-5 cursor-pointer appearance-none rounded-full border border-blue-gray-200 text-gray-900 transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-12 before:w-12 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blue-gray-500 before:opacity-0 before:transition-opacity checked:border-gray-900 checked:before:bg-gray-900 hover:before:opacity-10 "
-                {...register("gender", { required: true })}
-                defaultValue={user?.gender}
-              />
-              <span class="absolute text-gray-900 transition-opacity opacity-0 pointer-events-none bottom-[108px] -translate-y-[108px] translate-x-[181px] peer-checked:opacity-100">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="h-3.5 w-3.5"
-                  viewBox="0 0 16 16"
-                  fill="currentColor"
-                >
-                  <circle data-name="ellipse" cx="8" cy="8" r="8"></circle>
-                </svg>
-              </span>
-              <label htmlFor="">Female</label>
-              <input
-                type="radio"
-                name="gender"
-                id="other"
-                className="before:content[''] peer relative h-5 w-5 cursor-pointer appearance-none rounded-full border border-blue-gray-200 text-gray-900 transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-12 before:w-12 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blue-gray-500 before:opacity-0 before:transition-opacity checked:border-gray-900 checked:before:bg-gray-900 hover:before:opacity-10 "
+                id="gender"
+                className="form-style"
                 {...register("gender", { required: true })}
                 defaultValue={user?.additionalDetails?.gender}
-              />
-              <span class="absolute text-gray-900 transition-opacity opacity-0 pointer-events-none bottom-[108px] -translate-y-[108px] translate-x-[181px] peer-checked:opacity-100">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="h-3.5 w-3.5"
-                  viewBox="0 0 16 16"
-                  fill="currentColor"
-                >
-                  <circle data-name="ellipse" cx="8" cy="8" r="8"></circle>
-                </svg>
-              </span>
-              <label htmlFor="other">Other</label>
+              >
+                {genders.map((ele, i) => {
+                  return (
+                    <option key={i} value={ele}>
+                      {ele}
+                    </option>
+                  )
+                })}
+              </select>
+              {errors.gender && (
+                <span className="-mt-1 text-[12px] text-yellow-100">
+                  Please enter your Date of Birth.
+                </span>
+              )}
             </div>
-          </div> */}
+          </div>
+
+          <div className="flex flex-col gap-5 lg:flex-row">
+            <div className="flex flex-col gap-2 lg:w-[48%]">
+              <label htmlFor="contactNumber" className="label-style">
+                Contact Number
+              </label>
+              <input
+                type="tel"
+                name="contactNumber"
+                id="contactNumber"
+                placeholder="Enter Contact Number"
+                className="form-style"
+                {...register("contactNumber", {
+                  required: {
+                    value: true,
+                    message: "Please enter your Contact Number.",
+                  },
+                  maxLength: { value: 12, message: "Invalid Contact Number" },
+                  minLength: { value: 10, message: "Invalid Contact Number" },
+                })}
+                defaultValue={user?.additionalDetails?.contactNumber}
+              />
+              {errors.contactNumber && (
+                <span className="-mt-1 text-[12px] text-yellow-100">
+                  {errors.contactNumber.message}
+                </span>
+              )}
+            </div>
+            <div className="flex flex-col gap-2 lg:w-[48%]">
+              <label htmlFor="about" className="label-style">
+                About
+              </label>
+              <input
+                type="text"
+                name="about"
+                id="about"
+                placeholder="Enter Bio Details"
+                className="form-style"
+                {...register("about", { required: true })}
+                defaultValue={user?.additionalDetails?.about}
+              />
+              {errors.about && (
+                <span className="-mt-1 text-[12px] text-yellow-100">
+                  Please enter your About.
+                </span>
+              )}
+            </div>
+          </div>
         </div>
 
-        <div className="flex gap-x-2">
-          <div className="flex flex-col">
-            <label htmlFor="contactNumber" className="label-style">
-              Contact Number
-            </label>
-            <input
-              type="number"
-              name="contactNumber"
-              id="contactNumber"
-              placeholder="Enter Contact Number"
-              className="form-style"
-              {...register("contactNumber", { required: true })}
-              defaultValue={user?.contactNumber}
-            />
-            {error.contactNumber && (
-              <span className="text-[12px] text-yellow-100">
-                Please enter your Contact Number.
-              </span>
-            )}
-          </div>
-          <div className="flex flex-col">
-            <label htmlFor="about" className="label-style">
-              About
-            </label>
-            <input
-              type="text"
-              name="about"
-              id="about"
-              className="form-style"
-              placeholder="Enter Bio Details"
-              {...register("about", { required: true })}
-              defaultValue={user?.additionalDetails?.about}
-            />
-            {error.about && (
-              <span className="text-[12px] text-yellow-100">
-                Please enter your About.
-              </span>
-            )}
-          </div>
+        <div className="flex justify-end gap-2">
+          <button
+            onClick={() => {
+              navigate("/dashboard/my-profile")
+            }}
+            className="cursor-pointer rounded-md bg-richblack-700 py-2 px-5 font-semibold text-richblack-50"
+          >
+            Cancel
+          </button>
+          <IconBtn type="submit" text="Save" />
         </div>
       </form>
-      <div>
-        <button>Cancel</button>
-        <button>Save</button>
-      </div>
-    </div>
+    </>
   );
 };
 

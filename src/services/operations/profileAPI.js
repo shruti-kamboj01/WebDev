@@ -1,0 +1,105 @@
+import {toast} from 'react-hot-toast';
+
+import { profileEndpoints } from '../apis'
+import { apiConnector } from '../apiconnector';
+import { setUser } from '../../slices/profileSlice';
+import { logout } from './authAPI';
+
+const {
+    DELETE_PROFLIE,
+    UPDATE_PROFILE,
+    UPDATE_DISPLAY_PICTURE,
+    UPDATE_PASSWORD_API,
+} = profileEndpoints;
+
+export function updateDisplayPicture(token, formdata) {
+    return async(dispatch) => {
+        const toastId = toast.loading("Loading...")
+    //    console.log(formdata)
+        try{
+           const res = await apiConnector("PUT",
+            UPDATE_DISPLAY_PICTURE, formdata,
+            {
+                "Content-Type": "multipart/form-data",
+                Authorization:`Bearer ${token}`,
+            }
+           )
+           console.log(
+            "UPDATE_DISPLAY_PICTURE API RESPONSE.......",res)
+            
+            if(!res.data.success) {
+                throw new Error(res.data.message)
+            }
+            toast.success("Display Picture Updated Successfully")
+            dispatch(setUser(res.data.data))
+        }catch(error) {
+            console.log("UPDATE_DISPLAY_PICTURE API ERROR............", error)
+            toast.error("Could Not Update Display Picture")
+        }
+        toast.dismiss(toastId)
+    }
+}
+
+export function updateProfile(token, formdata) {
+    return async(dispatch) => {
+        const toastId = toast.loading("Loading...")
+        console.log("newformdata: ",formdata)
+        try{
+          const res = await apiConnector("PUT", UPDATE_PROFILE, formdata, {
+            Authorization: `${token}`,
+          })
+          console.log("UPDATE_PROFILE API RESPONSE............", res) 
+          if(!res.data.success) {
+            throw new Error(res.data.message)
+          }
+          dispatch(
+            setUser({...res.data.undatedUserDetails})
+          )
+          toast.success("Profile Updated Successfully")
+        }catch(error) {
+            console.log("UPDATE_PROFILE API ERROR............", error)
+            toast.error("Could Not Update Profile")
+        }
+        toast.dismiss(toastId)
+    }
+}
+
+export async function changePassword(token, formdata) {
+        const toastId = toast.loading("Loading...")
+        console.log("data", formdata)
+        try{
+            const res = await apiConnector("POST", UPDATE_PASSWORD_API, formdata, {
+                Authorization: `Bearer ${token}`,
+            })
+            console.log("UPDATE_PASSWORD_API API RESPONSE- ", res)
+            if(!res.data.success) {
+                throw new Error(res.data.message)
+            }
+            toast.success("Password changed Successfully")
+        }catch(error) {
+            console.log("UPDATE_PASSWORD_API API RESPONSE- ", error)
+            toast.error(error.res.data.message)
+        }
+        toast.dismiss(toastId)
+}
+
+export function deleteAccount(token, navigate) {
+   return async(dispatch) => {
+    const toastId = toast.loading("Loading...")
+    try{
+        const res = await apiConnector("DELETE", DELETE_PROFLIE, null, {
+            Authorization: `Bearer ${token}`,
+        })
+        console.log("DELETE_PROFLIE API RESPONSE-", res)
+        if(!res.data.success) {
+            throw new Error(res.data.message)
+        }
+        toast.success("ACCOUNT DELETED SUCCESSFULLY")
+        dispatch(logout(navigate))
+    }catch(error) {
+        console.log("DELETE_PROFLIE API RESPONSE-", error)
+        toast.error(error.res.data.message)
+    }
+    toast.dismiss(toastId)
+   }
+}
