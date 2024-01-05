@@ -1,5 +1,5 @@
 const RatingAndReview = require("../models/RatingAndReviews");
-const courses = require("../models/Course");
+const Course = require("../models/Course");
 
 
 //create Rating

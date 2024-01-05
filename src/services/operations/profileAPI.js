@@ -10,6 +10,7 @@ const {
     UPDATE_PROFILE,
     UPDATE_DISPLAY_PICTURE,
     UPDATE_PASSWORD_API,
+    ENROLLED_COURSE_API,
 } = profileEndpoints;
 
 export function updateDisplayPicture(token, formdata) {
@@ -103,3 +104,29 @@ export function deleteAccount(token, navigate) {
     toast.dismiss(toastId)
    }
 }
+
+export async function getUserEnrolledCourses(token) {
+    const toastId = toast.loading("Loading...")
+    let result = []
+       try{
+        const res = await apiConnector("GET", ENROLLED_COURSE_API, null, {
+            Authorization: `Bearer ${token}`,
+        })
+
+         console.log(
+      "GET_USER_ENROLLED_COURSES_API API RESPONSE............",
+      res
+    )
+
+        if(!res.data.success) {
+            throw new Error(res.data.message)
+        }
+        result = res.data.data
+
+       }catch(error) {
+        console.log("GET_USER_ENROLLED_COURSES_API API ERROR............", error)
+        toast.error("Could Not Get Enrolled Courses")
+       }
+       toast.dismiss(toastId)
+       return result
+    }

@@ -9,8 +9,8 @@ const MyProfile = () => {
 
   const navigate = useNavigate();
   return (
-    <div className="flex flex-col gap-8">
-      <h1 className="text-richblack-25 text-3xl font-semibold mb-4">My Profile</h1>
+    <div className="flex flex-col gap-8 ">
+      <h1 className="text-richblack-25 text-3xl font-semibold ">My Profile</h1>
       {/* 1 box */}
       <div className="bg-richblack-800 border px-12 flex items-center justify-between border-richblack-600 rounded-md">
         <div className="flex gap-4 mt-6 mb-6 items-center">
@@ -59,7 +59,7 @@ const MyProfile = () => {
        
       </div>
       {/* 3rd box */}
-      <div className="bg-richblack-800 border gap-y-5 px-12  flex flex-col  border-richblack-600 rounded-md">
+      <div className="bg-richblack-800 border gap-y-2 px-12  flex flex-col  border-richblack-600 rounded-md">
        <div className="flex justify-between items-center mt-8">
        <div>
           <h1 className="text-richblack-25 text-lg font-semibold">Personal Details</h1>

@@ -33,5 +33,8 @@ export const profileEndpoints = {
   DELETE_PROFLIE: BASE_URL + "/profile/deleteProfile",
   UPDATE_PROFILE:BASE_URL + "/profile/updateProfile",
   UPDATE_DISPLAY_PICTURE: BASE_URL + "/profile/updateDisplayPicture",
-  UPDATE_PASSWORD_API: BASE_URL + "/auth/changepassword"
+  UPDATE_PASSWORD_API: BASE_URL + "/auth/changepassword",
+
+  //Enrolled courses
+  ENROLLED_COURSE_API: BASE_URL + "/profile/getEnrolledCourses"
  }
