@@ -27,7 +27,7 @@ const Sidebar = () => {
 
   return (
     <div className='bg-richblack-800 lg:w-[15%] w-[30%] flex flex-col border-r-[1px] border-richblack-700
-                   h-[100vh] '>
+                    '>
         <div className='mt-10 flex flex-col '>
             {
                 sidebarLinks.map((link,index) => {
