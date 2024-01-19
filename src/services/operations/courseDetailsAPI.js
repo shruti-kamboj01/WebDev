@@ -22,6 +22,8 @@ export const fetchCourseCategories = async () => {
         console.log("result", res?.data?.data)
         if(!res?.data?.success) {
          throw new Error("Could Not Fetch Course Categories")
+
+         
         }
         result = res?.data?.data
      
