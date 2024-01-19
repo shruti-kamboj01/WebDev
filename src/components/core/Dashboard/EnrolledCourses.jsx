@@ -43,7 +43,7 @@ const EnrolledCourses = () => {
                 <h1>Progress</h1>
                 {
                     enrolledCourses.map((course, i) => (
-                        <div>
+                        <div key={i}>
                             <div> 
                             <img src={course.thumbnail}/>
                             </div>
