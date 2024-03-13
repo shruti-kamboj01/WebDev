@@ -19,7 +19,7 @@ export const fetchCourseCategories = async () => {
         const res = await apiConnector("GET", COURSE_CATEGORIES_API)
         console.log("COURSE_CATEGORIES_API API RESPONSE............", res)
     
-        console.log("result", res?.data?.data)
+        // console.log("result", res?.data?.data)
         if(!res?.data?.success) {
          throw new Error("Could Not Fetch Course Categories")
 

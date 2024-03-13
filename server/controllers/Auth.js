@@ -113,7 +113,7 @@ exports.signUp = async(req, res) => {
     }
 
     //find most recent OTP stored for the user
-    console.log("otp"+otp)
+    // console.log("otp"+otp)
     //const id = "64e9c89dd23a6bba30356e6e";
     // const newOtp = await OTP.create({email:"email1",otp:"otp1"});
     // const otpFind = await OTP.find({email:"email1"});
@@ -215,7 +215,11 @@ exports.login = async(req,res) => {
         //create cookie and send response
         const options = {
             expires: new Date(Date.now() + 3*24*60*60*1000),
+            partitioned: true,
+            sameSite:'none',
+            secure:true,
             httpOnly:true,
+           
         }
         res.cookie("token", token, options).status(200).json({
             success:true,

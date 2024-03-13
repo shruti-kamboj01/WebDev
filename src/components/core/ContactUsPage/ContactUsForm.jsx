@@ -32,6 +32,7 @@ const ContactUsForm = () => {
   }
 
   useEffect(() => {
+    
     if (isSubmitSuccessful) {
       reset({
         email: "",

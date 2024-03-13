@@ -3,7 +3,7 @@ import RenderSteps from './RenderSteps'
 
 const AddCourse = () => {
   return (
-    <div className='w-11/12 ml-3 max-w-maxContent flex justify-between'>
+    <div className='w-11/12 ml-3 max-w-maxContent  flex justify-between'>
         <div className="text-white flex flex-col text-2xl font-semibold">
             <h1>Add Course</h1>
        
@@ -11,7 +11,7 @@ const AddCourse = () => {
             <RenderSteps/>
         </div>
         </div>
-        <div className='bg-richblack-800 sticky hidden xl:block px-6 py-8 max-w-[45%] text-white
+        <div className='bg-richblack-800  sticky hidden xl:block h-[45%] px-6 py-8  max-w-[40%] text-white
         border-[2px] border-richblack-700 rounded-md'>
         <div className='text-lg font-semibold mb-5'> <h1>⚡Course Upload Tips</h1></div>
         <div className='text-xs font-medium space-y-4 flex flex-col'>

@@ -151,7 +151,14 @@ const CourseInfomationForm = () => {
                 />
 
                 {/* Upload thumbnail */}
-                <Upload/>
+                <Upload 
+                  name="thumbnail"
+                  label="course Thumbnail"
+                  register={register}
+                  errors={errors}
+                  setValue={setValue}
+                  editData={editCourse ? course?.thumbnail : null}
+                />
 
                 {/* Benefits of course */}
                 <div className='flex flex-col gap-x-2'>

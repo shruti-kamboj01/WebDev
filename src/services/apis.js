@@ -35,6 +35,7 @@ export const profileEndpoints = {
   UPDATE_PROFILE:BASE_URL + "/profile/updateProfile",
   UPDATE_DISPLAY_PICTURE: BASE_URL + "/profile/updateDisplayPicture",
   UPDATE_PASSWORD_API: BASE_URL + "/auth/changepassword",
+  GET_USER_DETAILS_API: BASE_URL + "/profile/getUserDetails",
 
   //Enrolled courses
   ENROLLED_COURSE_API: BASE_URL + "/profile/getEnrolledCourses"

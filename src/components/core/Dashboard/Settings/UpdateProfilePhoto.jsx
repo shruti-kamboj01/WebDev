@@ -3,12 +3,14 @@ import { useDispatch, useSelector } from 'react-redux'
 import IconBtn from '../../../common/IconBtn'
 import { FiUpload } from "react-icons/fi";
 import { updateDisplayPicture } from '../../../../services/operations/profileAPI';
+import { useNavigate } from 'react-router-dom';
 
 const UpdateProfilePhoto = () => {
 
     const {user} = useSelector((state) => state.profile)
     const {token} = useSelector((state) => state.auth)
     const dispatch = useDispatch()
+    const navigate = useNavigate()
     
     const [loading, setLoading] = useState(false)
     const [image, setImage] = useState(null)
@@ -32,8 +34,9 @@ const UpdateProfilePhoto = () => {
     //bcoz we havenot actually uploaded it 
     useEffect (() => {
        if(image) {
+        //it reads the url
         const reader = new FileReader()
-        console.log(reader)
+        // console.log(reader)
         reader.onloadend = () => {
            setPreview(reader.result)
         } 
@@ -48,7 +51,7 @@ const UpdateProfilePhoto = () => {
         const formdata = new FormData()
         formdata.append("displayPicture", image)
         console.log("formdata", formdata)
-        dispatch(updateDisplayPicture(token, formdata)).then(() => {
+        dispatch(updateDisplayPicture(token, formdata, navigate)).then(() => {
             setLoading(false)
         })
     }catch(err) {

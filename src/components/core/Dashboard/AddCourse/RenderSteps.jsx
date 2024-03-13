@@ -53,7 +53,7 @@ const RenderSteps = () => {
         ))}
        
       </div>
-      <div className="flex relative mb-16  select-none w-full ">
+      <div className="flex relative mb-16 select-none w-full ">
         {steps.map((item) => (
           <div className="flex min-w-[155px] flex-col items-center" key={item.id}>
             <p
