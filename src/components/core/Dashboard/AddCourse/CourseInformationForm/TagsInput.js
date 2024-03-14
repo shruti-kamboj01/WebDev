@@ -53,6 +53,7 @@ const TagsInput = ({ label, name, placeholder, errors, register }) => {
         placeholder={placeholder}
         className="form-style"
         onKeyDown={handleKeyDown}
+        
        
       />
       

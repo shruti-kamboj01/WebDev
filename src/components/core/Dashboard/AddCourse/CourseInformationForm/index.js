@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useDispatch, useSelector } from 'react-redux'
 import { HiOutlineCurrencyRupee } from "react-icons/hi";
+import { MdNavigateNext } from "react-icons/md"
+import IconBtn from '../../../../common/IconBtn';
 
 import TagsInput from './TagsInput';
 import Upload from '../Upload';
@@ -27,7 +29,6 @@ const CourseInfomationForm = () => {
         const getCategories = async () => {
             setLoading(true)
             const categories = await fetchCourseCategories()
-            console.log("categories", categories?.name)
             if(categories.length > 0) {
               setCourseCategories(categories)
             }
@@ -54,6 +55,7 @@ const CourseInfomationForm = () => {
       if(
         currentValues.courseName !== course.courseName 
       ) {return true}
+      return false
     }
     
 
@@ -61,11 +63,13 @@ const CourseInfomationForm = () => {
     if(editCourse) {
          
     }
+
    }
 
   return (
-    <div className='bg-richblue-800 border-[1px]  border-richblack-600 rounded-md'>
-          <form className='p-4' onSubmit={handleSubmit}>
+
+<div className='bg-richblue-800 border-[1px]   border-richblack-600 rounded-md'>
+          <form className='px-7 mt-4 flex flex-col gap-y-4 mb-4' onSubmit={handleSubmit(onSubmit)}>
                <div className='flex flex-col gap-x-2'>
                <label className='label-style' htmlFor='courseName'>Course Title <sup className='text-pink-200 tezt-[14px]'>*</sup></label>
                <input
@@ -178,9 +182,35 @@ const CourseInfomationForm = () => {
                </div>
 
                {/* Reqirements/Instruction */}
-               <RequirementField/>
+               <RequirementField
+                name="instruction"
+                label="Requirements/Instructions"
+                placeholder="Enter benefits of the course"
+                value="instruction"
+                register={register}
+                errors={errors}
+                setValue={setValue}
+               />
           </form>
+          
+          {/* Next button */}
+          <div className="flex justify-end mr-8 mb-4">
+            {
+              editCourse && (
+                <button className='flex cursor-pointer items-center gap-x-2 rounded-md bg-richblack-300 py-[8px] px-[20px] font-semibold text-richblack-900'>Continue Without Saving</button>
+              )
+            }
+            <IconBtn disabled={loading} 
+                   text={!editCourse ? "Next" : "Save Changes"} >
+                   <MdNavigateNext/>
+                   </IconBtn>
+          </div>
+        
+          
     </div>
+  
+
+    
   )
 }
 
