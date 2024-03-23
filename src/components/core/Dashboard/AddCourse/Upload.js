@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import {useDropzone} from 'react-dropzone'
 import { Player } from 'video-react'
 import { FiUploadCloud } from "react-icons/fi"
@@ -20,6 +20,10 @@ const Upload = ({
   )
   const inputRef = useRef(null)
 
+  const handleClick = () => {
+    inputRef.current.click()
+}
+
   const onDrop = (acceptedFiles) => {
        const file = acceptedFiles[0]
        if(file) {
@@ -39,6 +43,16 @@ const Upload = ({
         setPreviewImage(reader.result)
       }
     }
+
+    useEffect(() => {
+      register(name, { required: true })
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [register])
+
+    useEffect(() => {
+      setValue(name, selectedFile)
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [selectedFile, setValue])
 
   return (
     <div className='flex flex-col gap-x-2'>
@@ -81,7 +95,7 @@ const Upload = ({
            </div>
            <p className='mt-2 max-w-[200px] text-center text-sm text-richblack-200'>
             Drag and drop an {!video ? "image" : "video"}, or click to {" "}
-            <span className='font-semibold text-yellow-50'>Browse</span> a file
+            <span className='font-semibold text-yellow-50 cursor-pointer' onClick={handleClick} >Browse</span> a file
            </p>
            <ul className='mt-10 flex list-disc justify-between space-x-12 
            text-sm text-richblack-200 '>

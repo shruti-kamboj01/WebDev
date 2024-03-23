@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { IoCloseCircle } from "react-icons/io5";
 import { useSelector } from "react-redux";
 
-const TagsInput = ({ label, name, placeholder, errors, register }) => {
+const TagsInput = ({ label, name, placeholder, errors, register,setValue }) => {
 
   const {editCourse, course} = useSelector((state) => state.course)
 
@@ -13,8 +13,14 @@ const TagsInput = ({ label, name, placeholder, errors, register }) => {
       console.log("course in tag componenet",course)
       setTags(course?.tag)
     }
-    register(name, {required:true})
-  })
+    register(name, {required:true, validate: (value) => value.length > 0 })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[])
+  
+  useEffect(() => {
+    setValue(name, tags)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tags])
   
   function handleKeyDown(e) {
     // if user did not press enter key, return

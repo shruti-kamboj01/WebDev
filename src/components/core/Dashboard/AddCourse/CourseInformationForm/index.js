@@ -4,11 +4,13 @@ import { useDispatch, useSelector } from 'react-redux'
 import { HiOutlineCurrencyRupee } from "react-icons/hi";
 import { MdNavigateNext } from "react-icons/md"
 import IconBtn from '../../../../common/IconBtn';
+import { COURSE_STATUS } from '../../../../../utils/constants';
 
 import TagsInput from './TagsInput';
 import Upload from '../Upload';
 import RequirementField from './RequirementField';
-import { fetchCourseCategories } from '../../../../../services/operations/courseDetailsAPI';
+import { addCourseDetails, fetchCourseCategories } from '../../../../../services/operations/courseDetailsAPI';
+import { setCourse, setStep } from '../../../../../slices/courseSlice';
 
 const CourseInfomationForm = () => {
 
@@ -21,6 +23,7 @@ const CourseInfomationForm = () => {
     } = useForm()
 
     const dispatch = useDispatch()
+    const {token} = useSelector((state) => state.auth)
     const {course, editCourse} = useSelector((state) => state.course)
     const [loading, setLoading] = useState(false)
     const [courseCategories, setCourseCategories] = useState([])
@@ -47,23 +50,41 @@ const CourseInfomationForm = () => {
           setValue("thumbnail", course.thumbnail)
         }
         getCategories()
+          // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
-    const isFormUpdated = () => {
-      const currentValues = getValues()
-      console.log("changes after editing form values:", currentValues)
-      if(
-        currentValues.courseName !== course.courseName 
-      ) {return true}
-      return false
-    }
+    // const isFormUpdated = () => {
+    //   const currentValues = getValues()
+    //   console.log("changes after editing form values:", currentValues)
+    //   if(
+    //     currentValues.courseName !== course.courseName 
+    //   ) {return true}
+    //   return false
+    // }
     
 
    const onSubmit = async(data) => {
-    if(editCourse) {
+      console.log(data)
+    // if(editCourse) {
          
+    // }
+    const formData = new FormData()
+    formData.append("courseName", data.courseName)
+    formData.append("courseDescription", data.courseDescription)
+    formData.append("price", data.price)
+    formData.append("tag", data.tag)
+    formData.append("whatYouWillLearn", data.whatYouWillLearn)
+    formData.append("category", data.category)
+    formData.append("status", COURSE_STATUS.DRAFT)
+    formData.append("instructions", JSON.stringify(data.instructions))
+    formData.append("thumbnailImage", data.thumbnail)
+    
+    setLoading(true)
+    const result = await addCourseDetails(formData, token)
+    if(result) {
+      dispatch(setStep(2))
+      dispatch(setCourse(result))
     }
-
    }
 
   return (
@@ -183,7 +204,7 @@ const CourseInfomationForm = () => {
 
                {/* Reqirements/Instruction */}
                <RequirementField
-                name="instruction"
+                name="instructions"
                 label="Requirements/Instructions"
                 placeholder="Enter benefits of the course"
                 value="instruction"
@@ -197,7 +218,11 @@ const CourseInfomationForm = () => {
           <div className="flex justify-end mr-8 mb-4">
             {
               editCourse && (
-                <button className='flex cursor-pointer items-center gap-x-2 rounded-md bg-richblack-300 py-[8px] px-[20px] font-semibold text-richblack-900'>Continue Without Saving</button>
+                <button 
+                 onClick={() => dispatch(setStep(2))}
+                 disabled={loading}
+                className='flex cursor-pointer items-center gap-x-2 rounded-md bg-richblack-300 py-[8px] px-[20px] font-semibold text-richblack-900'>
+                Continue Without Saving</button>
               )
             }
             <IconBtn disabled={loading} 
