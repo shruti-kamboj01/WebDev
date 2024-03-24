@@ -64,7 +64,7 @@ const CourseInfomationForm = () => {
     
 
    const onSubmit = async(data) => {
-      console.log(data)
+      // console.log(data)
     // if(editCourse) {
          
     // }
@@ -107,7 +107,7 @@ const CourseInfomationForm = () => {
 
               {/*course description  */}
                <div className='flex flex-col gap-x-2'>
-               <label className='label-style' htmlFor='courseDescription'>Course Short Description <sup className='text-pink-200 tezt-[14px]'>*</sup></label>
+               <label className='label-style' htmlFor='courseDescription'>Course Short Description <sup className='text-pink-200 text-[14px]'>*</sup></label>
                <textarea
                     className='form-style'
                     placeholder='Enter Description'
@@ -178,7 +178,7 @@ const CourseInfomationForm = () => {
                 {/* Upload thumbnail */}
                 <Upload 
                   name="thumbnail"
-                  label="course Thumbnail"
+                  label="Course Thumbnail"
                   register={register}
                   errors={errors}
                   setValue={setValue}

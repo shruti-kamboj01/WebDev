@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react'
 import {useDropzone} from 'react-dropzone'
 import { Player } from 'video-react'
 import { FiUploadCloud } from "react-icons/fi"
+import "video-react/dist/video-react.css"
 
 
 const Upload = ({
@@ -33,7 +34,9 @@ const Upload = ({
   }
 
   const {getRootProps, getInputProps, isDragActive} = useDropzone({
-    accept: {"image/*" : [".jpeg", ".jpg", ".png"]},
+    accept: !video
+      ? { "image/*": [".jpeg", ".jpg", ".png"] }
+      : { "video/*": [".mp4"] },
     onDrop})
 
     const previewFile = (file) => {
@@ -55,24 +58,24 @@ const Upload = ({
     }, [selectedFile, setValue])
 
   return (
-    <div className='flex flex-col gap-x-2'>
-    <label className='label-style'>Course Thumbnail <sup className='text-pink-200 text-xs'>*</sup></label>
+    <div className='flex flex-col gap-y-2'>
+    <label className='label-style'>{label} <sup className='text-pink-200 text-xs'>*</sup></label>
       <div className={`${isDragActive ? "bg-richblack-600" : "bg-richblack-700" } border-dotted border-[2px] rounded-lg border-richblack-600 aspect-video
        `}>
         {
           previewImage ?
            (<div className='flex w-full flex-col p-6'>
-           {/* {!video ? ( */} 
+           {!video ? ( 
              <img
                 src={previewImage}
                 alt="Preview"
                 className="h-full w-full rounded-md object-cover"
               />
-            {/* ) : (
-              <div>
+            ) : (
+             
                 <Player aspectRatio='16:9' playsInline src={previewImage}/>
-              </div>
-            )} */}
+            
+            )}
             {!viewData && (
               <button
                 type="button"
@@ -88,9 +91,9 @@ const Upload = ({
             )}
          
            </div>) :
-           (<div  {...getRootProps()} className='flex flex-col w-full items-center p-6 gap-y-2'>
+           (<div  {...getRootProps()} className='flex flex-col w-full items-center p-6'>
            <input {...getInputProps()} ref={inputRef}/>
-           <div className='rounded-full bg-richblack-800 p-2.5'>
+           <div className=' rounded-full bg-richblack-800 p-2.5'>
             <FiUploadCloud className='text-2xl text-yellow-50'/>
            </div>
            <p className='mt-2 max-w-[200px] text-center text-sm text-richblack-200'>

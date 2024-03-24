@@ -196,3 +196,4 @@ exports.getCourseDetails = async (req,res) => {
         });
     }
 }
+

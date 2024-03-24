@@ -60,9 +60,9 @@ exports.createSubSection = async(req,res) => {
 exports.updateSubSection = async (req,res) => {
     try{
         //fetch data
-        const {sectionId, title, description} = req.body;
+        const {sectionId, subSectionId, title, description} = req.body;
         //fetch the particular subsecion that you wish to be updated
-        const subSection = await SubSection.findById(sectionId);
+        const subSection = await SubSection.findById(subSectionId);
         
         //validations
         if(!subSection) {
@@ -77,7 +77,7 @@ exports.updateSubSection = async (req,res) => {
         if(description !== undefined) {
             subSection.description = description
         }
-        if(req.files.video !== undefined) {
+        if(req.files && req.files.video !== undefined) {
             const video = req.files.video
             const uploadDetails = await uploadImageToCloudinary (
                 video,
@@ -88,6 +88,12 @@ exports.updateSubSection = async (req,res) => {
         }
         //save the changes
         await subSection.save();
+
+        //find updated section and return it
+        const updatedSection = await Section.findById(sectionId).populate(
+            "subSection"
+        )
+        console.log("updated section", updatedSection)
 
         //return response
         return res.json({
