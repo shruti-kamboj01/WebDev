@@ -109,7 +109,7 @@ export const deleteSection = async(data,token) => {
     let result = null
     const toastId = toast.loading("Loading...")
     try{
-        const res = await apiConnector("POST", DELETE_SECTION_API,data, {
+        const res = await apiConnector("POST", DELETE_SECTION_API, data, {
           Authorization: `Bearer ${token}`,
         })
         console.log("DELETE SECTION API RESPONSE............", res)
@@ -151,6 +151,7 @@ return result
 
 export const updateSubSection = async(data,token) => {
       let result = null
+      console.log("data", data) 
       const toastId = toast.loading("Loading...")
       try{
          const res = await apiConnector("PUT", UPDATE_SUBSECTION_API, data, {

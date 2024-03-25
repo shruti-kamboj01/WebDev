@@ -18,7 +18,7 @@ const NestedView = ({ handleChangeEditSectionName }) => {
 
   const [addSubSection, setAddSubSection] = useState(null);
   const [viewSubSection, setViewSubSection] = useState(null);
-  const [editSubSection, setEditSUbSection] = useState(null);
+  const [editSubSection, setEditSubSection] = useState(null);
   const [dropdown, setDropdown] = useState(false);
 
   const [confirmationModal, setConfirmationModal] = useState(null);
@@ -36,14 +36,23 @@ const NestedView = ({ handleChangeEditSectionName }) => {
      setConfirmationModal(null)
   };
 
-  const handleDeleteSubSection = async(dataId, sectionId) => {
+
+  
+  const handleDeleteSubSection = async(subSectionId, sectionId) => {
+ 
       const result = await deleteSubSection({
-           dataId, 
+           subSectionId, 
            sectionId,
            token
       })
       if(result) {
-        dispatch(setCourse(result))
+           console.log("result", result)
+          // update the structure of course
+         const updatedCourseContent = course.courseContent.map((section) => 
+          section._id === sectionId ? result : section
+         )
+         const updatedCourse = { ...course, courseContent: updatedCourseContent }
+         dispatch(setCourse(updatedCourse))
        }
        setConfirmationModal(null)
   }
@@ -112,9 +121,9 @@ const NestedView = ({ handleChangeEditSectionName }) => {
                       <BiSortDown className="text-xl" />
                       <p className="font-semibold text-xl">{data.title}</p>
                     </div>
-                    <div>
+                    <div onClick={(e) => e.stopPropagation()} className="flex gap-x-2">
                       <button
-                        onClick={() => setEditSUbSection({...data, sectionId: section._id})
+                        onClick={() => setEditSubSection({...data, sectionId: section._id})
                         }
                       >
                         <MdEdit />
@@ -164,7 +173,7 @@ const NestedView = ({ handleChangeEditSectionName }) => {
         :editSubSection ? (
           <SubSectionModal 
           modalData={editSubSection}
-          setModalData={setEditSUbSection}
+          setModalData={setEditSubSection}
           edit={true}
           />) 
         :

@@ -25,14 +25,19 @@ const SubSectionModal = ({
          getValues
     } = useForm()
 
+    console.log("view", view)
+    console.log("edit", edit)
+    console.log("add", add)
+
     const dispatch = useDispatch()
     const [loading, setLoading] = useState(false)
-    const [subSectionModal, setSubSectionModal] = useState(null)
+   
     const {token} = useSelector((state) => state.auth)
     const { course } = useSelector((state) => state.course);
 
     useEffect(()=> {
         if(view || edit) {
+             console.log("modalData", modalData)
             setValue("lectureTitle", modalData.title);
             setValue("lectureDesc", modalData.description);
             setValue("lectureVideo", modalData.videoUrl);
@@ -50,10 +55,13 @@ const SubSectionModal = ({
             return false;
         }
     }
-
+    
+    // handle the editing of subsection
     const handleEditSubSection = async() => {
           const currentValues = getValues()
+          console.log("changes after editing form values:", currentValues)
           const formData = new FormData()
+          console.log("Values After Editing form values:", currentValues)
 
           formData.append("sectionId", modalData.sectionId)
           formData.append("subSectionId", modalData._id)
@@ -71,17 +79,23 @@ const SubSectionModal = ({
           setLoading(true)
           //API call
           const result = await updateSubSection(formData, token)
+           console.log("result", result)
+          // update the structure of course
           if(result) {
-            dispatch(setCourse(result))
+            const updatedCourseContent = course.courseContent.map((section) => 
+            section._id === modalData.sectionId ? result : section)
+            const updatedCourse = {...course, courseContent: updatedCourseContent}
+            dispatch(setCourse(updatedCourse))
           }
           setModalData(null)
           setLoading(false)
     }
 
     const onSubmit = async(data) => {
+        console.log("data",data)
         if(view) return;
         if(edit) {
-            if(!isFormUpdated) {
+            if(!isFormUpdated()) {
                 toast.error("No changes made to the form")
             }
             else{
@@ -101,7 +115,12 @@ const SubSectionModal = ({
         //API call
         const result = await createSubSection(formData, token)
         if(result) {
-            dispatch(setCourse(result))
+          // update the structure of course
+          const updatedCourseContent = course.courseContent.map((section) =>
+          section._id === modalData ? result : section
+    )
+           const updatedCourse = { ...course, courseContent: updatedCourseContent }
+           dispatch(setCourse(updatedCourse))
         }
         setModalData(null);
         setLoading(false)

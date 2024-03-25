@@ -38,7 +38,7 @@ const goToBack = () => {
 }
 
 
-
+// console.log(course.courseContent)
 const goToNext = () => {
   // bina section ke next step par jaake fayda nhi
   if(course.courseContent.length === 0) {
