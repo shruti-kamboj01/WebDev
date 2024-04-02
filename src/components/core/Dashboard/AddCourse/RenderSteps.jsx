@@ -29,7 +29,7 @@ const RenderSteps = () => {
       <div className="text-white relative flex mb-2 mt-6 justify-center w-full">
         {steps.map((item) => (
           <>
-            <div className="">
+            <div className="" key={item.id}>
               <button
                 className={`rounded-full mb-1 px-3 py-1 ${
                   step === item.id

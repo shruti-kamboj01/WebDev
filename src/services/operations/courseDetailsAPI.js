@@ -13,6 +13,7 @@ const {
   DELETE_SUBSECTION_API,
   CREATE_SUBSECTION_API,
   UPDATE_SUBSECTION_API,
+  EDIT_COURSE_API,
 } = courseEndpoints
 
 
@@ -154,9 +155,13 @@ export const updateSubSection = async(data,token) => {
       console.log("data", data) 
       const toastId = toast.loading("Loading...")
       try{
-         const res = await apiConnector("PUT", UPDATE_SUBSECTION_API, data, {
+        // console.log("hello")
+        // console.log("data is", data)
+        // console.log("token is", token)
+         const res = await apiConnector("POST", UPDATE_SUBSECTION_API, data, {
           Authorization: `Bearer ${token}`,
          })
+        
          console.log("UPDATE SUB-SECTION API RESPONSE............", res)
          if (!res?.data?.success) {
           throw new Error("Could Not Update Lecture")
@@ -190,6 +195,28 @@ export const deleteSubSection = async(data,token) => {
   }
   toast.dismiss(toastId)
   return result
+}
+
+export const editCourseDetails = async(data, token) => {
+  let result = null
+  const toastId = toast.loading("Loading...")
+  try{
+      const res = await apiConnector("PUT", EDIT_COURSE_API,data, {
+        Authorization: `Bearer ${token}`,
+      })
+      console.log("EDIT COURSE API RESPONSE............", res)
+      if(!res?.data?.success) {
+        throw new Error("Could Not EDIT COURSE")
+      }
+      toast.success("Course Edited")
+      result = res?.data?.data
+  }catch(error) {
+    console.log("EDIT COURSE API ERROR............", error)
+    toast.error(error.message)
+  }
+  toast.dismiss(toastId)
+  return result
+
 }
 
 

@@ -24,15 +24,20 @@ const TagsInput = ({ label, name, placeholder, errors, register,setValue }) => {
   
   function handleKeyDown(e) {
     // if user did not press enter key, return
-    if(e.key !== 'Enter' ) return
-    //get the value of the input
-    const value = e.target.value
-    //if the value is empty, return
-    if(!value.trim()) return
-    //Add the value to the tags array
-    setTags([...tags, value])
-    //clear the input
-    e.target.value=""
+    if(e.key == 'Enter' || e.key == "," ) {
+      e.preventDefault()
+      //get the value of the input
+      const value = e.target.value
+      //if the value is empty, return
+      if(!value.trim()) return
+      if (value && !tags.includes(value)) {
+      //Add the value to the tags array
+      setTags([...tags, value])
+      //clear the input
+      e.target.value=""
+      }
+    }
+   
   }
 
   function removeTag(i) {

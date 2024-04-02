@@ -14,14 +14,14 @@ const ProfileDropDown = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
-  useOnClickOutside(ref, () => setOpen(false))
+  // useOnClickOutside(ref, () => setOpen(false))
 
   return (
-  <button onClick={()=> setOpen(true)} className='relative'>
+  <button onClick={()=> setOpen(!open)} className='relative'>
       <div className='flex gap-x-1'>
     
     {/* image */}
-      <div>
+      <div ref={ref}>
         <img 
         src={user?.image}
         alt={`profile-${user?.firstName}`}
@@ -32,7 +32,7 @@ const ProfileDropDown = () => {
 
       {open && (
         <div ref={ref}
-        //  onClick={(e) => e.stopPropagation()}
+         onClick={(e) => e.stopPropagation()}
         className='absolute top-[110%] divide-y-[1px] divide-richblack-700 flex flex-col  rounded-md  text-base border-[1px] border-richblack-700 bg-richblack-800'
         >
          <Link to='/dashboard/my-profile' onClick={() => setOpen(false)}>

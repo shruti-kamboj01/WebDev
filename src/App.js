@@ -20,7 +20,7 @@ import EnrolledCourses from "./components/core/Dashboard/EnrolledCourses";
 import {  useDispatch, useSelector } from "react-redux";
 import AddCourse from "./components/core/Dashboard/AddCourse";
 import MyCourse from "./components/core/Dashboard/MyCourse";
-import Cookies from "js-cookie";
+
 import { getUserDetails } from "./services/operations/profileAPI";
 import { useEffect } from "react";
 
@@ -33,29 +33,13 @@ function App() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   
-
-  useEffect(() => {
-    if (Cookies.get("token")) {
-    const token = JSON.parse(Cookies.get("token"))
-    console.log(token)
-     //  eslint-disable-next-line react-hooks/exhaustive-deps
-    dispatch(getUserDetails(token,navigate))
+useEffect(() => {
+  if (localStorage.getItem("token")) {
+    const token = JSON.parse(localStorage.getItem("token"))
+    dispatch(getUserDetails(token, navigate))
   }
-   //  eslint-disable-next-line react-hooks/exhaustive-deps
-  },[])
-  
-
-
-
-
-// useEffect(() => {
-//   if (localStorage.getItem("token")) {
-//     const token = JSON.parse(localStorage.getItem("token"))
-//     console.log(token)
-//     dispatch(getUserDetails(token, navigate))
-//   }
-//   // eslint-disable-next-line react-hooks/exhaustive-deps
-// }, [])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+}, [])
 
 
   return (

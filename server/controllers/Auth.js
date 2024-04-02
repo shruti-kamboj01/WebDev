@@ -216,7 +216,7 @@ exports.login = async(req,res) => {
         const options = {
             expires: new Date(Date.now() + 3*24*60*60*1000),
             partitioned: true,
-            sameSite:'none',
+            SameSite: 'None',
             secure:true,
             httpOnly:true,
            
