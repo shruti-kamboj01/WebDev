@@ -132,10 +132,15 @@ exports.getAllCourses = async (req, res) => {
 				instructor: true,
 				ratingAndReviews: true,
 				studentsEnroled: true,
+				courseDescription: true,
+				status: true,
+				
 			}
 		)
 			.populate("instructor")
+			.sort({createdAt: -1})
 			.exec();
+			
 		return res.status(200).json({
 			success: true,
 			data: allCourses,
@@ -195,6 +200,11 @@ exports.getCourseDetails = async (req,res) => {
             message:error.message,
         });
     }
+}
+
+//getFullCourseDetails including courseProgess
+exports.getFullCourseDetails = async (req,res) => {
+	
 }
 
 //edit course details

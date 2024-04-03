@@ -14,6 +14,7 @@ const {
   CREATE_SUBSECTION_API,
   UPDATE_SUBSECTION_API,
   EDIT_COURSE_API,
+  GET_ALL_COURSE_API,
 } = courseEndpoints
 
 
@@ -219,6 +220,26 @@ export const editCourseDetails = async(data, token) => {
 
 }
 
+export const getAllCourses = async() => {
+    let result = []
+
+    try{
+      const res = await apiConnector("GET", GET_ALL_COURSE_API)
+      console.log("GET_ALL_COURSE_API API RESPONSE............", res)
+  
+      if(!res?.data?.success) {
+       throw new Error("Could Not Fetch Course details")
+       }
+      result = res?.data?.data
+   
+
+    }catch(error) {
+      console.log("GET_ALL_COURSE_API API ERROR............", error)
+      toast.error(error.message)
+    }
+    return result
+
+}
 
 
 

@@ -58,6 +58,7 @@ exports.categoryPageDetails = async (req,res) => {
                                                 .populate("course")
                                                 .exec();
          //validation
+         // Handle the case when the category is not found
          if(!selectedCategory) {
             return res.status(404).json({
                 success:false,
