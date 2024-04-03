@@ -23,6 +23,7 @@ import MyCourse from "./components/core/Dashboard/MyCourse";
 
 import { getUserDetails } from "./services/operations/profileAPI";
 import { useEffect } from "react";
+import EditCourse from "./components/core/Dashboard/EditCourse";
 
 
 
@@ -103,6 +104,10 @@ useEffect(() => {
             <Route
             path="dashboard/my-courses"
             element={<MyCourse/>}
+            />
+            <Route
+              path="dashboard/edit-course/:courseId"
+              element={<EditCourse/>}
             />
           </>
 

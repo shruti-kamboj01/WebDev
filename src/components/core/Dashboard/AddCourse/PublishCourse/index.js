@@ -50,6 +50,7 @@ const PublishCourse = () => {
         formdata.append('courseId', course._id)
         const courseStatus = getValues("publish") ? COURSE_STATUS.PUBLISHED 
         : COURSE_STATUS.DRAFT
+        console.log(courseStatus)
         formdata.append('status', courseStatus)
         setLoading(true)
         const result = await editCourseDetails(formdata, token)

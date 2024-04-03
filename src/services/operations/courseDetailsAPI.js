@@ -15,12 +15,15 @@ const {
   UPDATE_SUBSECTION_API,
   EDIT_COURSE_API,
   GET_ALL_COURSE_API,
+  DELETE_COURSE_API,
+  COURSE_DETAILS_API,
 } = courseEndpoints
 
 
 // fetching the available course categories
 // console.log("heelo")
 export const fetchCourseCategories = async () => {
+  const toastId = toast.loading("Loading...")
     let result = []
       try{
         const res = await apiConnector("GET", COURSE_CATEGORIES_API)
@@ -30,6 +33,7 @@ export const fetchCourseCategories = async () => {
         if(!res?.data?.success) {
          throw new Error("Could Not Fetch Course Categories")
          }
+         toast.dismiss(toastId)
         result = res?.data?.data
      
  
@@ -241,6 +245,54 @@ export const getAllCourses = async() => {
 
 }
 
+// delete a course
+export const deleteCourse = async (data, token) => {
+  const toastId = toast.loading("Loading...")
+  try {
+    const response = await apiConnector("DELETE", DELETE_COURSE_API, data, {
+      Authorization: `Bearer ${token}`,
+    })
+    console.log("DELETE COURSE API RESPONSE............", response)
+    if (!response?.data?.success) {
+      throw new Error("Could Not Delete Course")
+    }
+    toast.success("Course Deleted")
+  } catch (error) {
+    console.log("DELETE COURSE API ERROR............", error)
+    toast.error(error.message)
+  }
+  toast.dismiss(toastId)
+}
+
+//specific course details
+export const fetchCourseDetails = async(courseId, token) => {
+  // console.log("data is",courseId)
+  // console.log("token is",token)
+  
+  const toastId = toast.loading("Loading...")
+  //   dispatch(setLoading(true));
+  let result = null
+  try {
+    const response = await apiConnector("POST", COURSE_DETAILS_API,{ courseId,},{
+   
+      Authorization: `Bearer ${token}`,
+      
+    })
+    console.log("COURSE_DETAILS_API API RESPONSE............", response)
+
+    if (!response.data.success) {
+      throw new Error(response.data.message)
+    }
+    result = response.data
+  } catch (error) {
+    console.log("COURSE_DETAILS_API API ERROR............", error)
+    result = error.response.data
+    // toast.error(error.response.data.message);
+  }
+  toast.dismiss(toastId)
+  //   dispatch(setLoading(false));
+  return result
+}
 
 
 

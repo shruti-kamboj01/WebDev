@@ -227,6 +227,15 @@ exports.login = async(req,res) => {
             user,
             message:"Logged in successfully",
         })
+        //sending a json response only, this token can be saved on user's local machine 
+        // and then user can send that token through headers, there is builtin header called authorization header 
+        // and in this we have a authorization scheme called bearer and bearer means we are using token based authentication
+        // res.status(200).json({
+        //     success:true,
+        //     token,
+        //     user,
+        //     message:"Logged in successfully",
+        // })
     }else{
             return res.status(401).json({
                 success:false,

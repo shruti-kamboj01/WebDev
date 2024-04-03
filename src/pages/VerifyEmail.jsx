@@ -45,17 +45,19 @@ const VerifyEmail = () => {
  
 
   return (
-    <div>
+    <div >
       {loading ? (
         <div className="spinner"></div>
       ) : (
-        <div>
-          <h1 className="text-richblack-5 font-semibold text-3xl">
+        <div className="w-11/12 max-w-maxContent mx-auto mt-40 gap-y-8 flex justify-center flex-col items-center">
+        <div className="flex flex-col items-center gap-y-1">
+        <h1 className="text-richblack-5 font-semibold text-3xl">
             Verify email
           </h1>
           <p className="text-richblack-100 font-normal text-lg mb-4">
             A verification code has been sent to you. Enter the code below
           </p>
+        </div>
 
           <form onSubmit={handleOnSubmit}>
             <OTPInput
@@ -83,7 +85,7 @@ const VerifyEmail = () => {
             Verify Email
           </button>
           </form>
-           <div className="text-richblack-100">
+           <div className="text-richblack-100 flex flex-col items-start mr-56">
             <Link to="/signUp">
               <p className="flex gap-2 items-center">
                 <BiArrowBack />

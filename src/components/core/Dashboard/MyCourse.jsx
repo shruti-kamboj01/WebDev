@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Th, Thead, Tr, Td, Tbody, Table } from "react-super-responsive-table";
+
 import { IoAddCircleOutline } from "react-icons/io5";
 import IconBtn from "../../common/IconBtn";
 import { useNavigate } from "react-router-dom";
@@ -8,22 +8,26 @@ import { FaCheck } from "react-icons/fa";
 import { FiEdit2 } from "react-icons/fi";
 import { HiClock } from "react-icons/hi";
 import { RiDeleteBin6Line } from "react-icons/ri";
-import { getAllCourses } from "../../../services/operations/courseDetailsAPI";
+import { deleteCourse, getAllCourses } from "../../../services/operations/courseDetailsAPI";
 import { formatDate } from "../../../services/formateDate";
 import { COURSE_STATUS } from "../../../utils/constants";
+import  ConfirmationModal  from "../../common/ConfirmationModal";
+
 
 const MyCourse = () => {
   const navigate = useNavigate();
-  // const { course } = useSelector((state) => state.course);
+
+  const {token} = useSelector((state) => state.auth)
 
   const [getCourses, setGetCourses] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [confirmationModal, setConfirmationModal] = useState(null);
 
   useEffect(() => {
     const getCourseDetails = async () => {
       setLoading(true);
       const courses = await getAllCourses();
-      console.log(courses);
+      // console.log(courses);
       if (courses.length > 0) {
         setGetCourses(courses);
       }
@@ -32,8 +36,20 @@ const MyCourse = () => {
     getCourseDetails();
   }, []);
 
+  const handleDeleteCourse = async(id) => {
+      setLoading(true)
+      await deleteCourse({courseId: id}, token)
+      const result = await getAllCourses(token) 
+      if(result) {
+        setGetCourses(result)
+      }
+      setConfirmationModal(null)
+      setLoading(false)
+  }
+
   return (
-    <div className="w-11/12 max-w-maxContent mx-auto flex flex-col gap-y-14">
+    <div className="w-11/12 max-w-maxContent mx-auto flex flex-col gap-y-14
+   ">
       {/* header  */}
       <div className="flex justify-between">
         <p className="font-medium text-3xl font-inter text-richblack-25">
@@ -45,73 +61,112 @@ const MyCourse = () => {
       </div>
 
       {/* table */}
-      <div className="text-richblack-50">
-        <Table className="border-[1px] border-richblack-800 rounded-md p-4">
-          <Thead>
-            <Tr className="flex gap-x-10 uppercase border-b-[1px] border-b-richblack-800 py-2 px-4">
-              <Th className="flex-1 text-left  ">Courses</Th>
-              <Th className="flex-1 text-left  ">Duration</Th>
-              <Th className="flex-1 text-left  ">Price</Th>
-              <Th className="flex-1 text-left  ">Actions</Th>
-            </Tr>
-          </Thead>
-          <Tbody>
-            {getCourses?.length === 0 ? (
-              <Tr>
-                <Td>No course found</Td>
-              </Tr>
-            ) : (
-              getCourses.map((course) => (
-                <Tr key={course?._id} className="">
-                  <Td className="flex gap-x-3 p-6">
-                    <img
-                      src={course.thumbnail}
-                      alt={course.courseName}
-                      className="w-[30%] h-[30%] rounded-md "
-                    />
-                    <div className="text-sm font-normal flex flex-col justify-evenly">
-                      <p className="text-lg font-semibold">
-                        {course.courseName}
-                      </p>
-                      <p className="text-richblack-600">
-                        {course.courseDescription}
-                      </p>
+      <div className="border border-richblack-800 flex justify-evenly
+       rounded-md py-4">
+        <div className="w-[50%]">
+          <p className="text-richblack-200 text-lg font-medium mb-2">Courses</p>
+          {getCourses.map((course) => (
+            <div className="flex gap-x-3 ">
+              <img
+                src={course.thumbnail}
+                alt={course.courseName}
+                className="w-[90%] h-[90%] rounded-md "
+              />
+              <div className="text-sm gap-y-3 flex flex-col">
+                <p className="text-white text-lg font-medium">
+                  {" "}
+                  {course.courseName}{" "}
+                </p>
+                <p className="text-richblack-200 ">
+                  {course.courseDescription}{" "}
+                </p>
+                <p className="text-white">
+                  {" "}
+                  Created: {formatDate(course.instructor.createdAt)}{" "}
+                </p>
+                <p>
+                  {course.status === COURSE_STATUS.DRAFT ? (
+                    <p className="flex w-fit flex-row items-center gap-2 rounded-full bg-richblack-700 px-2 py-[2px] text-[12px] font-medium text-pink-100">
+                      <HiClock size={14} />
+                      Drafted
+                    </p>
+                  ) : (
+                    <p className="flex w-fit flex-row items-center gap-2 rounded-full bg-richblack-700 px-2 py-[2px] text-[12px] font-medium text-yellow-100">
+                      <div className="flex h-3 w-3 items-center justify-center rounded-full bg-yellow-100 text-richblack-700">
+                        <FaCheck size={8} />
+                      </div>
+                      Published
+                    </p>
+                  )}
+                </p>
 
-                      <p className="w-fit">
-                        {" "}
-                        Created: {formatDate(course.instructor.createdAt)}
-                      </p>
+              </div>
+            </div>
+          ))}
+        </div>
 
-                      {course.status === COURSE_STATUS.DRAFT ? (
-                        <p className=" bg-richblack-700 p-2 text-sm px-4 leading-3 text-pink-400 rounded-lg w-fit flex items-center gap-x-2">
-                          <HiClock />
-                          <p>Drafted</p>
-                        </p>
-                      ) : (
-                        <p className=" bg-richblack-700 text-sm px-4  leading-3 text-yellow-50 rounded-lg w-fit flex items-center gap-x-2">
-                          <FaCheck />
-                          <p>Published</p>
-                        </p>
-                      )}
-                    </div>
-                  </Td>
-                  <Td>2hr 30min</Td>
-                  <Td>₹{course.price}</Td>
-                  <Td>
-                    <button>
-                      <FiEdit2/>
-                    </button>
-                    <button>
-                      <RiDeleteBin6Line/>
-                    </button>
-                  </Td>
+        <div className="flex flex-col">
+          <p className="text-richblack-200 text-lg font-medium mb-2">
+            Duration
+          </p>
+          <p className="text-richblack-100 text-base font-medium">2hr 30min</p>
+        </div>
+        <div>
+          <p className="text-richblack-200 text-lg font-medium mb-2"> Price </p>
+          {getCourses.map((course) => (
+            <p className="text-richblack-100 text-base font-medium">
+              {" "}
+              ₹{" "}{course.price}{" "}
+            </p>
+          ))}
+        </div>
 
-                </Tr>
-              ))
-            )}
-          </Tbody>
-        </Table>
+        <div className="text-richblack-100 text-lg font-medium">
+          <p className="text-richblack-200 text-lg font-medium mb-2">
+            {" "}
+            Actions
+          </p>
+          {getCourses.map((course) => (
+            <div>
+              <button
+                disabled={loading}
+                onClick={() => {
+                  navigate(`/dashboard/edit-course/${course._id}`);
+                }}
+                title="Edit"
+                className="px-2 transition-all duration-200 hover:scale-110 hover:text-caribbeangreen-300"
+              >
+                <FiEdit2 />
+              </button>
+
+              <button
+                disabled={loading}
+                onClick={() => 
+                  setConfirmationModal({
+                    text1: "Do you want to delete this course?",
+                    text2:
+                          "All the data related to this course will be deleted",
+                    btn1Text: !loading ? "Delete" : "Loading...  ",
+                    btn2Text: "Cancel",
+                    btn1Handler:!loading ? () => handleDeleteCourse(course._id) :
+                    () => {},
+                    btn2Handler: () => setConfirmationModal(null)
+
+                  })
+                 
+                }
+                title = "Delete"
+                className="transition-all duration-200 hover:scale-110 hover:text-pink-700"
+              >
+                <RiDeleteBin6Line />
+              </button>
+            </div>
+          ))}
+          <button></button>
+        </div>
       </div>
+
+      {confirmationModal && <ConfirmationModal modalData={confirmationModal} />}
     </div>
   );
 };

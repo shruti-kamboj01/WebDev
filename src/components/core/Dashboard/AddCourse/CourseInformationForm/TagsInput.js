@@ -10,8 +10,9 @@ const TagsInput = ({ label, name, placeholder, errors, register,setValue }) => {
 
   useEffect(() => {
     if(editCourse) {
-      console.log("course in tag componenet",course)
-      setTags(course?.tag)
+      // console.log("course in tag componenet",course)
+    
+      setTags(course?.data?.tag)
     }
     register(name, {required:true, validate: (value) => value.length > 0 })
     // eslint-disable-next-line react-hooks/exhaustive-deps
