@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import IconBtn from '../../../../common/IconBtn'
 
-import { resetCourseState, setEditCourse, setStep } from "../../../../../slices/courseSlice";
+import { resetCourseState, setStep } from "../../../../../slices/courseSlice";
 import { COURSE_STATUS } from "../../../../../utils/constants";
 import { useNavigate } from "react-router-dom";
 import { editCourseDetails } from "../../../../../services/operations/courseDetailsAPI";
@@ -28,12 +28,15 @@ const PublishCourse = () => {
     dispatch(setStep(2))
     // dispatch(setEditCourse(true))
   }
+  
+  console.log("status before", course?.status)
 
   useEffect(() => {
     if(course?.status === COURSE_STATUS.PUBLISHED) {
       setValue("publish", true)
     }
   },[])
+  console.log("status", course?.status)
 
   const handlePublishChanges = async() => {
       if((course?.status === COURSE_STATUS.PUBLISHED && getValues("publish") === true)
@@ -62,7 +65,7 @@ const PublishCourse = () => {
   }
 
   const onSubmit = (data) => {
-    console.log(data)
+    console.log("data",data)
     handlePublishChanges()
   };
 
@@ -76,7 +79,7 @@ const PublishCourse = () => {
      
         <div className="flex gap-x-3">
         <label className="" htmlFor="public">
-          <input type="checkbox" id="public" {...register("public")} />
+          <input type="checkbox" id="publish" {...register("publish")} />
           <span className="text-richblack-400 font-medium text-xl" >  Make this course as public</span>
           </label>
       

@@ -4,12 +4,13 @@ import Logo from '../../assets/Logo/Logo-Full-Light.png'
 import {IoIosArrowDropdownCircle} from "react-icons/io"
 import { Link, matchPath } from 'react-router-dom'
 import { useLocation } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import {AiOutlineShoppingCart} from "react-icons/ai"
 import {FiSearch} from "react-icons/fi"
 import ProfileDropDown from '../core/Auth/ProfileDropDown'
 import { ACCOUNT_TYPE } from '../../utils/constants'
 import { fetchCourseCategories } from '../../services/operations/courseDetailsAPI'
+import { setCategory } from '../../slices/courseSlice'
 
 
 const Navbar = () => {
@@ -17,6 +18,7 @@ const Navbar = () => {
   const {token} = useSelector((state) => state.auth);
   const {user} = useSelector((state) => state.profile);
   const {totalItems} = useSelector((state) => state.cart);
+  const dispatch = useDispatch()
   
   const location = useLocation();
   const matchRoute = (route) => {
@@ -31,11 +33,13 @@ const Navbar = () => {
     //  console.log(result)
      if(result.length > 0) {
       setSubLinks(result);
+      dispatch(setCategory(result))
      }
     setLoading(false);
   }
   useEffect(() => {
-    fetchSublinks();
+     fetchSublinks();
+    
   },[])
   // console.log("sub links", subLinks)
 

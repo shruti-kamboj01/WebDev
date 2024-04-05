@@ -36,9 +36,9 @@ exports.sendOTP = async(req,res)=> {
 
         //check unique otp or not
         const result = await OTP.findOne({otp: otp});
-        console.log("Result is Generate OTP Func");
-        console.log("OTP generated: ", otp );
-        console.log("Result", result);
+        // console.log("Result is Generate OTP Func");
+        // console.log("OTP generated: ", otp );
+        // console.log("Result", result);
 
         while(result) {
             otp = otpGenerator.generate(6,{
@@ -50,10 +50,10 @@ exports.sendOTP = async(req,res)=> {
     const otpPayload = {email, otp};
 
     //create an entry for OTP
-    console.log(typeof otpPayload.otp);
+    // console.log(typeof otpPayload.otp);
 
     const otpBody = await OTP.create(otpPayload);
-    console.log("OTP body:", otpBody);
+    // console.log("OTP body:", otpBody);
     
     //return response successfylly
     res.status(200).json({
@@ -119,7 +119,7 @@ exports.signUp = async(req, res) => {
     // const otpFind = await OTP.find({email:"email1"});
     // console.log("new"+newOtp+"Find"+otpFind);
     const response = await OTP.find({ email }).sort({ createdAt: -1 }).limit(1);
-    console.log("response:"+response)
+    // console.log("response:"+response)
     if (response.length === 0) {
         // OTP not found for the email
         return res.status(400).json({
@@ -213,29 +213,29 @@ exports.login = async(req,res) => {
             user.password = undefined;
 
         //create cookie and send response
-        const options = {
-            expires: new Date(Date.now() + 3*24*60*60*1000),
-            partitioned: true,
-            SameSite: 'None',
-            secure:true,
-            httpOnly:true,
+        // const options = {
+        //     expires: new Date(Date.now() + 3*24*60*60*1000),
+        //     partitioned: true,
+        //     SameSite: 'None',
+        //     secure:true,
+        //     httpOnly:true,
            
-        }
-        res.cookie("token", token, options).status(200).json({
-            success:true,
-            token,
-            user,
-            message:"Logged in successfully",
-        })
-        //sending a json response only, this token can be saved on user's local machine 
-        // and then user can send that token through headers, there is builtin header called authorization header 
-        // and in this we have a authorization scheme called bearer and bearer means we are using token based authentication
-        // res.status(200).json({
+        // }
+        // res.cookie("token", token, options).status(200).json({
         //     success:true,
         //     token,
         //     user,
         //     message:"Logged in successfully",
         // })
+        //sending a json response only, this token can be saved on user's local machine 
+        // and then user can send that token through headers, there is builtin header called authorization header 
+        // and in this we have a authorization scheme called bearer and bearer means we are using token based authentication
+        res.status(200).json({
+            success:true,
+            token,
+            user,
+            message:"Logged in successfully",
+        })
     }else{
             return res.status(401).json({
                 success:false,
@@ -304,6 +304,7 @@ exports.changePassword = async(req,res) => {
       res.json({
         success: true,
         message: 'Password Changed Successfully',
+        updatedUserDetails,
       });
    }catch(err) {
     

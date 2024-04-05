@@ -27,9 +27,9 @@ const RenderSteps = () => {
   return (
     <div>
       <div className="text-white relative flex mb-2 mt-6 justify-center w-full">
-        {steps.map((item) => (
+        {steps.map((item,i) => (
           <>
-            <div className="" key={item.id}>
+            <div className="" key={i}>
               <button
                 className={`rounded-full mb-1 px-3 py-1 ${
                   step === item.id
@@ -54,8 +54,8 @@ const RenderSteps = () => {
        
       </div>
       <div className="flex relative mb-16 select-none w-full ">
-        {steps.map((item) => (
-          <div className="flex min-w-[155px] flex-col items-center" key={item.id}>
+        {steps.map((item,i) => (
+          <div className="flex min-w-[155px] flex-col items-center" key={i}>
             <p
               className={`text-sm font-normal  ${
                 step >= item.id  ? "text-white" : "text-richblack-500"

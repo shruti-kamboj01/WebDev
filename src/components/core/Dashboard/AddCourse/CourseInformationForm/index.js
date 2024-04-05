@@ -12,7 +12,7 @@ import RequirementField from "./RequirementField";
 import {
   addCourseDetails,
   editCourseDetails,
-  fetchCourseCategories,
+  
 } from "../../../../../services/operations/courseDetailsAPI";
 import { setCourse, setStep } from "../../../../../slices/courseSlice";
 import toast from "react-hot-toast";
@@ -28,44 +28,41 @@ const CourseInfomationForm = () => {
 
   const dispatch = useDispatch();
   const { token } = useSelector((state) => state.auth);
-  const { course, editCourse } = useSelector((state) => state.course);
+  const { course, editCourse, category } = useSelector((state) => state.course);
   const [loading, setLoading] = useState(false);
-  const [courseCategories, setCourseCategories] = useState([]);
+
+  // console.log("categ", category)
 
   useEffect(() => {
-    const getCategories = async () => {
-      setLoading(true);
-      const categories = await fetchCourseCategories();
-      if (categories.length > 0) {
-        setCourseCategories(categories);
-      }
-      setLoading(false);
-    };
+
 
     if (editCourse) {
-      setValue("courseName", course.courseName);
-      setValue("courseDescription", course.courseDescription);
-      setValue("price", course.price);
-      setValue("tag", course.tag);
-      setValue("whatYouWillLearn", course.whatYouWillLearn);
-      setValue("category", course.category);
-      setValue("instrutions", course.instructions);
-      setValue("thumbnail", course.thumbnail);
+      // console.log("course is", course)
+      // console.log("category", course.data.category._id)
+      
+      setValue("courseName", course.data.courseName);
+      setValue("courseDescription", course.data.courseDescription);
+      setValue("price", course.data.price);
+      setValue("tag", course?.tag);
+      setValue("whatYouWillLearn", course?.data?.whatYouWillLearn);
+      setValue("category", course?.data?.category?._id);
+      setValue("instrutions", course?.data?.instructions);
+      setValue("thumbnail", course?.data?.thumbnail);
     }
-    getCategories();
+    // getCategories();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const isFormUpdated = () => {
     const currentValues = getValues();
-    console.log("changes after editing form values:", currentValues);
+    // console.log("changes after editing form values:", currentValues);
     if (
       currentValues.courseName !== course.courseName ||
       currentValues.courseDescription !== course.courseDescription ||
       currentValues.price !== course.price ||
       currentValues.tag !== course.tag ||
       currentValues.whatYouWillLearn !== course.whatYouWillLearn ||
-      currentValues.category !== course.category ||
+      currentValues.category._id !== course.category._id ||
       currentValues.instrutions !== course.instrutions ||
       currentValues.thumbnail !== course.thumbnail
     ) {
@@ -76,13 +73,17 @@ const CourseInfomationForm = () => {
 
   //   handle next button click
   const onSubmit = async (data) => {
-    console.log(data);
+    console.log("data",data);
     if (editCourse) {
       if (isFormUpdated) {
         const currentValues = getValues();
+        console.log("currentValues",currentValues)
+       
         const formData = new FormData();
         //console.log(data)
-        formData.append("courseId", course._id);
+        formData.append("courseId", course?.data?._id);
+        // console.log(data.thumbnail)
+        console.log("course", course.data.category._id)
         if (currentValues.courseName !== course.courseName) {
           formData.append("courseName", data.courseName);
         }
@@ -98,17 +99,19 @@ const CourseInfomationForm = () => {
         if (currentValues.whatYouWillLearn !== course.whatYouWillLearn) {
           formData.append("whatYouWillLearn", data.whatYouWillLearn);
         }
-        if (currentValues.category !== course.category) {
+        if (currentValues.category._id !== course.data.category._id) {
           formData.append("category", data.category);
         }
         if (currentValues.instrutions !== course.instrutions) {
-          formData.append("instructions", JSON.stringify(data.instructions));
+          formData.append("instructions", data.instructions);
         }
         if (currentValues.thumbnail !== course.thumbnail) {
           formData.append("thumbnailImage", data.thumbnail);
         }
+        // console.log("id", course?.data?._id)
         setLoading(true);
         const result = await editCourseDetails(formData, token);
+        // console.log("result", result)
         setLoading(false);
         if (result) dispatch(setStep(2));
         dispatch(setCourse(result));
@@ -117,24 +120,27 @@ const CourseInfomationForm = () => {
       }
       return;
     }
-    const formData = new FormData();
-    formData.append("courseName", data.courseName);
-    formData.append("courseDescription", data.courseDescription);
-    formData.append("price", data.price);
-    formData.append("tag", data.tag);
-    formData.append("whatYouWillLearn", data.whatYouWillLearn);
-    formData.append("category", data.category);
-    formData.append("status", COURSE_STATUS.DRAFT);
-    formData.append("instructions", data.instructions);
-    formData.append("thumbnailImage", data.thumbnail);
-
-    setLoading(true);
-    const result = await addCourseDetails(formData, token);
-    if (result) {
-      dispatch(setStep(2));
-      dispatch(setCourse(result));
+    else{
+      const formData = new FormData();
+      formData.append("courseName", data.courseName);
+      formData.append("courseDescription", data.courseDescription);
+      formData.append("price", data.price);
+      formData.append("tag", data.tag);
+      formData.append("whatYouWillLearn", data.whatYouWillLearn);
+      formData.append("category", data.category);
+      // formData.append("status", COURSE_STATUS.PUBLISHED);
+      formData.append("instructions", data.instructions);
+      formData.append("thumbnailImage", data.thumbnail);
+      
+      setLoading(true);
+      
+      const result = await addCourseDetails(formData, token);
+      if (result) {
+        dispatch(setStep(2));
+        dispatch(setCourse(result));
+      }
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   return (
@@ -223,7 +229,7 @@ const CourseInfomationForm = () => {
               Choose a Category
             </option>
             {!loading &&
-              courseCategories?.map((ele, indx) => (
+              category?.map((ele, indx) => (
                 <option key={indx} value={ele?._id}>
                   {ele?.name}
                 </option>
@@ -254,7 +260,7 @@ const CourseInfomationForm = () => {
           register={register}
           errors={errors}
           setValue={setValue}
-          editData={editCourse ? course?.thumbnail : null}
+          editData={editCourse ? course?.data?.thumbnail : null}
         />
 
         {/* Benefits of course */}
@@ -303,6 +309,7 @@ const CourseInfomationForm = () => {
           )}
           <IconBtn
             disabled={loading}
+           
             text={!editCourse ? "Next" : "Save Changes"}
           >
             <MdNavigateNext />

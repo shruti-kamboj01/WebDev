@@ -66,7 +66,7 @@ const MyCourse = () => {
         <div className="w-[50%]">
           <p className="text-richblack-200 text-lg font-medium mb-2">Courses</p>
           {getCourses.map((course) => (
-            <div className="flex gap-x-3 ">
+            <div className="flex gap-x-3 mt-6">
               <img
                 src={course.thumbnail}
                 alt={course.courseName}
@@ -109,12 +109,16 @@ const MyCourse = () => {
           <p className="text-richblack-200 text-lg font-medium mb-2">
             Duration
           </p>
-          <p className="text-richblack-100 text-base font-medium">2hr 30min</p>
+          <p className="text-richblack-100 text-base font-medium">
+          {getCourses.map((course) => (
+            <div className="mb-44">2hr 30min</div>
+          ))}
+          </p>
         </div>
         <div>
           <p className="text-richblack-200 text-lg font-medium mb-2"> Price </p>
           {getCourses.map((course) => (
-            <p className="text-richblack-100 text-base font-medium">
+            <p className="text-richblack-100 text-base font-medium mb-44">
               {" "}
               ₹{" "}{course.price}{" "}
             </p>
@@ -156,7 +160,7 @@ const MyCourse = () => {
                  
                 }
                 title = "Delete"
-                className="transition-all duration-200 hover:scale-110 hover:text-pink-700"
+                className="transition-all mb-44 duration-200 hover:scale-110 hover:text-pink-700"
               >
                 <RiDeleteBin6Line />
               </button>

@@ -5,6 +5,7 @@ import { FiUploadCloud } from "react-icons/fi"
 import "video-react/dist/video-react.css"
 
 
+
 const Upload = ({
   name,
   label,
@@ -19,6 +20,7 @@ const Upload = ({
   const [previewImage, setPreviewImage] = useState(
     viewData ? viewData : editData ? editData : ""
   )
+  // console.log(editData)
   const inputRef = useRef(null)
 
   const handleClick = () => {

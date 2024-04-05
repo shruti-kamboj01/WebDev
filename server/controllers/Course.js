@@ -22,6 +22,7 @@ exports.createCourse = async (req, res) => {
       status,
       instructions,
     } = req.body;
+    console.log("id",category)
 
     // Get thumbnail image from request files
     const thumbnail = req.files.thumbnailImage;
@@ -148,7 +149,7 @@ exports.getAllCourses = async (req, res) => {
       data: allCourses,
     });
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     return res.status(404).json({
       success: false,
       message: `Can't Fetch Course Data`,
@@ -181,6 +182,8 @@ exports.getCourseDetails = async (req, res) => {
       })
       .exec();
 
+      // console.log(courseDetails.thumbnail)
+
     //validations
     if (!courseDetails) {
       return res.status(400).json({
@@ -195,7 +198,7 @@ exports.getCourseDetails = async (req, res) => {
       data: courseDetails,
     });
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     return res.status(500).json({
       success: false,
       message: error.message,
@@ -210,7 +213,7 @@ exports.deleteCourse = async (req, res) => {
   try {
     const { courseId } = req.body;
     const course = await Course.findById(courseId);
-	console.log(course)
+	// console.log(course)
 
     if (!course) {
       return res.status(404).json({ message: "Course not found" });
@@ -232,13 +235,24 @@ exports.deleteCourse = async (req, res) => {
 			// Delete the section
 		await Section.findByIdAndDelete(sectionId)
 		}
-	
-		
+	  
+	 const category = course.category
+    await Category.findByIdAndUpdate(
+      { _id: category },
+      {
+        $pull: {
+          course: course._id,
+        },
+      },
+      { new: true }
+    );
   
 		
 	  
     // Delete the course
     await Course.findByIdAndDelete(courseId);
+
+    
     return res.status(200).json({
       success: true,
       message: "Course deleted successfully",
@@ -256,15 +270,18 @@ exports.deleteCourse = async (req, res) => {
 exports.editCourseDetails = async (req, res) => {
   try {
     const { courseId } = req.body;
+    console.log(courseId)
     const course = await Course.findById(courseId);
     if (!course) {
       return res.status(404).json({ error: "Course not found" });
     }
     const updates = req.body;
+    console.log("update",updates.category)
 
     // If Thumbnail Image is found, update it
     if (req.files) {
-      console.log("thumbnail update");
+      // console.log("thumbnail update");
+      // console.log(req.files)
       const thumbnail = req.files.thumbnailImage;
       const thumbnailImage = await uploadImageToCloudinary(
         thumbnail,
@@ -272,13 +289,14 @@ exports.editCourseDetails = async (req, res) => {
       );
       course.thumbnail = thumbnailImage.secure_url;
     }
-
+  
     for (const key in updates) {
       if (updates.hasOwnProperty(key)) {
         course[key] = updates[key];
       }
     }
-    await course.save();
+    const entercreated = await course.save();
+    console.log("db entery",entercreated)
 
     const updatedCourse = await Course.findOne({
       _id: courseId,
