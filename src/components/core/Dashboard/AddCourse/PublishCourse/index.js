@@ -29,18 +29,18 @@ const PublishCourse = () => {
     // dispatch(setEditCourse(true))
   }
   
-  console.log("status before", course?.status)
+  // console.log("status before", course?.data?.status)
 
   useEffect(() => {
-    if(course?.status === COURSE_STATUS.PUBLISHED) {
+    if(course?.data?.status === COURSE_STATUS.PUBLISHED) {
       setValue("publish", true)
     }
   },[])
-  console.log("status", course?.status)
+  // console.log("status", course?.status)
 
   const handlePublishChanges = async() => {
-      if((course?.status === COURSE_STATUS.PUBLISHED && getValues("publish") === true)
-        || (course?.status === COURSE_STATUS.DRAFT && getValues("publish") === false) )
+      if((course?.data?.status === COURSE_STATUS.PUBLISHED && getValues("publish") === true)
+        || (course?.data?.status === COURSE_STATUS.DRAFT && getValues("publish") === false) )
         {  
           // form has not been updated
           // no need to make api call
@@ -53,7 +53,7 @@ const PublishCourse = () => {
         formdata.append('courseId', course._id)
         const courseStatus = getValues("publish") ? COURSE_STATUS.PUBLISHED 
         : COURSE_STATUS.DRAFT
-        console.log(courseStatus)
+        // console.log(courseStatus)
         formdata.append('status', courseStatus)
         setLoading(true)
         const result = await editCourseDetails(formdata, token)
@@ -65,7 +65,7 @@ const PublishCourse = () => {
   }
 
   const onSubmit = (data) => {
-    console.log("data",data)
+    // console.log("data",data)
     handlePublishChanges()
   };
 

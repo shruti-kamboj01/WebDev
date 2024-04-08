@@ -30,6 +30,7 @@ export const courseEndpoints = {
 // CATAGORIES API
 export const categories = {
   CATEGORIES_API: BASE_URL + "/course/showAllCategories",
+  CATEGORY_PAGE_DETAILS_API: BASE_URL + "/course/getCategoryPageDetails"
 }
 
 //CONTACT-US API

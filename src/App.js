@@ -25,6 +25,8 @@ import { getUserDetails } from "./services/operations/profileAPI";
 import { useEffect } from "react";
 import EditCourse from "./components/core/Dashboard/EditCourse";
 
+import Catelog from "./pages/Catelog";
+
 
 
 
@@ -50,6 +52,7 @@ useEffect(() => {
         <Route path="/" element={<Home/>}/>
         <Route path="/about" element={<About/>}/>
         <Route path="/contact" element={<ContactUs/>}/>
+        <Route path="catalog/:catalogName" element={<Catelog/>}/>
         {/* Open Route- only for non-authenticated user */}
         <Route path="/login"
          element ={

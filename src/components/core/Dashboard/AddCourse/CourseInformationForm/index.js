@@ -43,10 +43,10 @@ const CourseInfomationForm = () => {
       setValue("courseName", course.data.courseName);
       setValue("courseDescription", course.data.courseDescription);
       setValue("price", course.data.price);
-      setValue("tag", course?.tag);
+      setValue("tag", course?.data.tag);
       setValue("whatYouWillLearn", course?.data?.whatYouWillLearn);
       setValue("category", course?.data?.category?._id);
-      setValue("instrutions", course?.data?.instructions);
+      setValue("instructions", course?.data?.instructions);
       setValue("thumbnail", course?.data?.thumbnail);
     }
     // getCategories();
@@ -55,35 +55,39 @@ const CourseInfomationForm = () => {
 
   const isFormUpdated = () => {
     const currentValues = getValues();
-    // console.log("changes after editing form values:", currentValues);
+    console.log("changes after editing form values:", currentValues);
+    console.log("currentValw",currentValues.instructions)
+    console.log("course",course.data.instructions)
     if (
-      currentValues.courseName !== course.courseName ||
-      currentValues.courseDescription !== course.courseDescription ||
-      currentValues.price !== course.price ||
-      currentValues.tag !== course.tag ||
-      currentValues.whatYouWillLearn !== course.whatYouWillLearn ||
-      currentValues.category._id !== course.category._id ||
-      currentValues.instrutions !== course.instrutions ||
-      currentValues.thumbnail !== course.thumbnail
+      currentValues.courseName !== course.data.courseName ||
+      currentValues.courseDescription !== course.data.courseDescription ||
+      currentValues.price !== course.data.price ||
+      currentValues.tag !== course.data.tag ||
+      currentValues.whatYouWillLearn !== course.data.whatYouWillLearn ||
+      currentValues.category !== course.data.category._id ||
+      currentValues.instructions !== course.data.instructions ||
+      currentValues.thumbnail !== course.data.thumbnail
     ) {
-      return true;
+      return true
     }
-    return false;
-  };
+    return false
+  }
+  // console.log("bool", isFormUpdated())
 
   //   handle next button click
   const onSubmit = async (data) => {
-    console.log("data",data);
+    // console.log("data",data);
     if (editCourse) {
-      if (isFormUpdated) {
+      if (isFormUpdated()) {
+        // console.log("inside this")
         const currentValues = getValues();
-        console.log("currentValues",currentValues)
+        // console.log("currentValues",currentValues)
        
         const formData = new FormData();
         //console.log(data)
         formData.append("courseId", course?.data?._id);
         // console.log(data.thumbnail)
-        console.log("course", course.data.category._id)
+        // console.log("course", course.data.category._id)
         if (currentValues.courseName !== course.courseName) {
           formData.append("courseName", data.courseName);
         }
@@ -102,7 +106,7 @@ const CourseInfomationForm = () => {
         if (currentValues.category._id !== course.data.category._id) {
           formData.append("category", data.category);
         }
-        if (currentValues.instrutions !== course.instrutions) {
+        if (currentValues.instructions !== course.instructions) {
           formData.append("instructions", data.instructions);
         }
         if (currentValues.thumbnail !== course.thumbnail) {
@@ -115,10 +119,11 @@ const CourseInfomationForm = () => {
         setLoading(false);
         if (result) dispatch(setStep(2));
         dispatch(setCourse(result));
-      } else {
-        toast.error("No changes msde to the form");
+      } 
+      else {
+        toast.error("No changes made to the form");
       }
-      return;
+      return
     }
     else{
       const formData = new FormData();
@@ -128,7 +133,7 @@ const CourseInfomationForm = () => {
       formData.append("tag", data.tag);
       formData.append("whatYouWillLearn", data.whatYouWillLearn);
       formData.append("category", data.category);
-      // formData.append("status", COURSE_STATUS.PUBLISHED);
+      formData.append("status", COURSE_STATUS.DRAFT);
       formData.append("instructions", data.instructions);
       formData.append("thumbnailImage", data.thumbnail);
       

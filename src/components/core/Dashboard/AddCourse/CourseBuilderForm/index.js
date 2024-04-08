@@ -38,7 +38,9 @@ const goToBack = () => {
 }
 
 
-// console.log(course.courseContent)
+
+// console.log("course2",course.data.courseContent)
+
 const goToNext = () => {
   // bina section ke next step par jaake fayda nhi
   if(course.courseContent.length === 0) {
@@ -93,7 +95,7 @@ const onSubmit = async(data) => {
     //loading false
     setLoading(false)
 }
-
+console.log("course",course.courseContent)
   return (
     <div className='bg-richblack-800 border-[1px] border-richblack-600 rounded-md p-2 px-4'>
       <p> Course Builder</p>
@@ -129,7 +131,7 @@ const onSubmit = async(data) => {
           )}
         </div>
       </form>
-  
+      {console.log("length",course.courseContent.length )}
       {course.courseContent.length > 0 && (
         <NestedView handleChangeEditSectionName={handleChangeEditSectionName} />
       )}

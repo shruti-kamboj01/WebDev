@@ -110,7 +110,7 @@ exports.createCourse = async (req, res) => {
     // Return the new course and a success message
     res.status(200).json({
       success: true,
-      data: newCourse,
+      data:newCourse,
       message: "Course Created Successfully",
     });
   } catch (error) {
@@ -146,7 +146,7 @@ exports.getAllCourses = async (req, res) => {
 
     return res.status(200).json({
       success: true,
-      data: allCourses,
+      data:allCourses,
     });
   } catch (error) {
     // console.log(error);
@@ -195,7 +195,7 @@ exports.getCourseDetails = async (req, res) => {
     return res.status(200).json({
       success: true,
       message: "Course Details fetched successfully",
-      data: courseDetails,
+      data:courseDetails,
     });
   } catch (error) {
     // console.log(error);
@@ -320,7 +320,7 @@ exports.editCourseDetails = async (req, res) => {
     res.json({
       success: true,
       message: "Course updated successfully",
-      data: updatedCourse,
+      data:updatedCourse,
     });
   } catch (error) {
     console.error(error);
