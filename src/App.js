@@ -26,6 +26,7 @@ import { useEffect } from "react";
 import EditCourse from "./components/core/Dashboard/EditCourse";
 
 import Catelog from "./pages/Catelog";
+import CourseDetails from "./pages/CourseDetails";
 
 
 
@@ -53,6 +54,10 @@ useEffect(() => {
         <Route path="/about" element={<About/>}/>
         <Route path="/contact" element={<ContactUs/>}/>
         <Route path="catalog/:catalogName" element={<Catelog/>}/>
+        <Route
+                path="/course/:_id"
+                element={<CourseDetails/>}
+              />
         {/* Open Route- only for non-authenticated user */}
         <Route path="/login"
          element ={
@@ -123,6 +128,8 @@ useEffect(() => {
                 path="dashboard/enrolled-courses"
                 element={<EnrolledCourses/>}
               />
+
+             
             </>
           )}
        </Route>

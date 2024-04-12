@@ -16,7 +16,7 @@ const EditCourse = () => {
     useEffect(() => {
         ;(async () => {
           setLoading(true)
-          const result = await fetchCourseDetails(courseId, token)
+          const result = await fetchCourseDetails(courseId)
           if (result) {
             dispatch(setEditCourse(true))
             dispatch(setCourse(result))

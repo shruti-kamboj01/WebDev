@@ -17,6 +17,7 @@ const {
   GET_ALL_COURSE_API,
   DELETE_COURSE_API,
   COURSE_DETAILS_API,
+  FETCH_INSTRUCTOR_COURSE,
 } = courseEndpoints
 
 
@@ -65,6 +66,26 @@ export const addCourseDetails = async(data,token) => {
     }
     toast.dismiss(toastId)
     return result
+}
+
+export const fetchInstructorCourse = async(token) => {
+  let result = []
+  const toastId = toast.loading("Loading...")
+  try{
+        const res = await apiConnector("GET", FETCH_INSTRUCTOR_COURSE,null, {
+          Authorization: `Bearer ${token}`,
+        })
+        console.log("FETCH_INSTRUCTOR_COURSE API RESPONSE............", res)
+        if(!res?.data?.success) {
+          throw new Error("Could not Fetch Instructor Course" )
+        }
+        toast.dismiss(toastId)
+        result = res?.data?.data
+  } catch(error) {
+    console.log(" FETCH_INSTRUCTOR_COURSEAPI ERROR............", error)
+    toast.error(error.message)
+  }
+  return result
 }
 
 export const createSection = async(data,token) => {
@@ -266,7 +287,7 @@ export const deleteCourse = async (data, token) => {
 }
 
 //specific course details
-export const fetchCourseDetails = async(courseId, token) => {
+export const fetchCourseDetails = async(courseId) => {
   // console.log("data is",courseId)
   // console.log("token is",token)
   
@@ -274,11 +295,9 @@ export const fetchCourseDetails = async(courseId, token) => {
   //   dispatch(setLoading(true));
   let result = null
   try {
-    const response = await apiConnector("POST", COURSE_DETAILS_API,{ courseId,},{
-   
-      Authorization: `Bearer ${token}`,
-      
-    })
+    const response = await apiConnector("POST", COURSE_DETAILS_API,
+    { courseId,}
+   )
     console.log("COURSE_DETAILS_API API RESPONSE............", response)
 
     if (!response.data.success) {

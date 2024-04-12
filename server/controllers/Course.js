@@ -206,6 +206,29 @@ exports.getCourseDetails = async (req, res) => {
   }
 };
 
+exports.getInstructorCourseDetails = async(req,res) => {
+  try{
+        const instructorId= req.user.id;
+        const instructorCourses = await Course.find(
+          {id: instructorId,}
+        )
+        .sort({ createdAt: -1 })   
+       res.status(200).json({
+          success: true,
+          data: instructorCourses,
+        })
+     
+
+  }catch(error) {
+    console.error(error)
+    res.status(500).json({
+      success: false,
+      message: "Failed to retrieve instructor courses",
+      error: error.message,
+    })
+  }
+}
+
 //getFullCourseDetails including courseProgess
 exports.getFullCourseDetails = async (req, res) => {};
 

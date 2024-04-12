@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import { fetchCourseCategories } from "../services/operations/courseDetailsAPI";
 import Error from './Error'
 import Course_Slider from '../components/core/Catelog/Course_Slider'
+import Course_Card from "../components/core/Catelog/Course_Card";
 
 const Catelog = () => {
   const [loading, setLoading] = useState(false);
@@ -16,7 +17,7 @@ const Catelog = () => {
  
 // fetching categories 
   const fetchCourseCategory = async () => {
-    console.log("inside")
+    // console.log("inside")
     const result = await fetchCourseCategories()
   
     const category_id = result.filter(
@@ -55,7 +56,7 @@ const Catelog = () => {
   if (!loading && !catalogPageData.success) {
     return <Error />
   }
-
+  // console.log("course",catalogPageData?.data?.differentCategory?.course)
 
   return (
     <div className="max-w-max-contentmx-auto">
@@ -83,12 +84,12 @@ const Catelog = () => {
         </div>
       </div>
 
-      <div>
-        <p className="text-2xl font-semibold text-richblack-25 mt-12 mb-8">
+      <div className="mb-4">
+        <p className="text-2xl font-semibold text-richblack-25 mt-12">
           Top courses in{" "} {catalogPageData?.data?.differentCategory?.name} 
         </p>
         <div>
-          <Course_Slider course={catalogPageData?.data?.differentCategory?.course}/>
+          <Course_Slider Courses={catalogPageData?.data?.differentCategory?.course}/>
         </div>
       </div>
 
@@ -97,7 +98,10 @@ const Catelog = () => {
           Frequently Bought
         </p>
         <div>
-          <Course_Slider course={catalogPageData?.data?.mostSellingCourses?.course}/>
+      
+          {/* {catalogPageData?.data?.mostSellingCourses?.slice(0,4).map((course,i) => (
+            <Course_Card course={course} key={i} Height = {"h-[400px]"}/> */}
+          {/* ))} */}
         </div>
       </div>
       </div>
