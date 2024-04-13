@@ -100,6 +100,11 @@ const CourseDetails = () => {
         {/* RATING */}
       
       </div>
+          
+      <div className='border-richblack-100 border-[1px] py-3 px-5 ml-28 w-7/12 max-w-maxContent'>
+            <p className='text-white text-2xl font-semibold'>What you'll learn</p>
+            <p className='text-richblack-50 text-base font-medium'> {course?.data?.whatYouWillLearn} </p>
+      </div>
       {confirmationModal && <ConfirmationModal modalData={confirmationModal} />}
     </div>
   )
