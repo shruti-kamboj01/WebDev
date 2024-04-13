@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 require("dotenv").config();
 
 exports.connect = () => {
+    console.log("mongodb string", process.env.MONGODB_URL)
     mongoose.connect(process.env.MONGODB_URL,{
         useNewUrlParser: true,
         useUnifiedTopology:true,
