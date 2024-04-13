@@ -36,7 +36,7 @@ const CourseDetails = () => {
     <div className=''>
       {/* hero section */}
       <div className="bg-richblack-800 py-20 flex">
-       <div className='w-11/12 mx-auto max-w-maxContent  relative flex flex-col gap-y-3 border-r-[1px] border-richblack-400'>
+       <div className='ml-28 w-7/12 max-w-maxContent  relative flex flex-col gap-y-3 border-r-[1px] border-richblack-400'>
        <p className="text-richblack-400 text-xl font-medium">Home/ Learning /
         <span className='text-yellow-50'> {course?.data?.category?.name}</span></p>
         <div>
