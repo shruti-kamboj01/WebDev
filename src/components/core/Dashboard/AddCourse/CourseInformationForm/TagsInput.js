@@ -25,7 +25,7 @@ const TagsInput = ({ label, name, placeholder, errors, register,setValue }) => {
   
   function handleKeyDown(e) {
     // if user did not press enter key, return
-    if(e.key == 'Enter' || e.key == "," ) {
+    if(e.key === 'Enter' || e.key === "," ) {
       e.preventDefault()
       //get the value of the input
       const value = e.target.value

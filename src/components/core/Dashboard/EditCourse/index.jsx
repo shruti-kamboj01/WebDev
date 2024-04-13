@@ -11,7 +11,7 @@ const EditCourse = () => {
     const { courseId } = useParams()
     const { course } = useSelector((state) => state.course)
     const [loading, setLoading] = useState(false)
-    const { token } = useSelector((state) => state.auth)
+    
 
     useEffect(() => {
         ;(async () => {

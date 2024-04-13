@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { fetchCourseCategories, fetchCourseDetails } from '../services/operations/courseDetailsAPI'
+import { fetchCourseDetails } from '../services/operations/courseDetailsAPI'
 import { useNavigate, useParams } from 'react-router-dom'
 import { IoInformationCircleOutline } from "react-icons/io5";
 import{ formatDate }from '../services/formateDate'

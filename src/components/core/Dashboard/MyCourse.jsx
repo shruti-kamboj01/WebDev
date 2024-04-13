@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 
 import { IoAddCircleOutline } from "react-icons/io5";
-import IconBtn from "../../common/IconBtn";
+import IconBtn from '../../common/IconBtn';
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { FaCheck } from "react-icons/fa";
 import { FiEdit2 } from "react-icons/fi";
 import { HiClock } from "react-icons/hi";
 import { RiDeleteBin6Line } from "react-icons/ri";
-import { deleteCourse, fetchInstructorCourse, getAllCourses } from "../../../services/operations/courseDetailsAPI";
+import { deleteCourse, getAllCourses } from "../../../services/operations/courseDetailsAPI";
 import { formatDate } from "../../../services/formateDate";
 import { COURSE_STATUS } from "../../../utils/constants";
 import  ConfirmationModal  from "../../common/ConfirmationModal";

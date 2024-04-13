@@ -4,7 +4,7 @@ import { VscDashboard, VscSignOut } from "react-icons/vsc"
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { logout } from '../../../services/operations/authAPI';
-import useOnClickOutside from '../../../hooks/useClickOutside';
+// import useOnClickOutside from '../../../hooks/useClickOutside';
 
 const ProfileDropDown = () => {
 
