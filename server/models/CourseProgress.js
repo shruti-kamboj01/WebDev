@@ -1,4 +1,6 @@
 const mongoose = require("mongoose");
+mongoose.set('bufferCommands', false);
+mongoose.set('autoCreate',false);
 
 const courseProgress = new mongoose.Schema({
     courseID:{

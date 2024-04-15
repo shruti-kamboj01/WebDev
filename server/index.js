@@ -17,6 +17,8 @@ const dotenv = require("dotenv");
 dotenv.config();
 const PORT = process.env.PORT || 4000;
 
+
+
 //database connect
 database.connect();
 //middlewares
@@ -24,14 +26,11 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
 	cors({
-		origin: ["https://webdev-u1rb.onrender.com", "http://localhost:3000"],
-		credentials:true,
-		
-
-		
+		origin: ["http://localhost:3000/","https://webdev-u1rb.onrender.com"],
+		credentials:true
 	})
-)
-
+);
+app.options("*", cors())
 
 app.use(
 	fileUpload({
@@ -59,6 +58,14 @@ app.get("/", (req, res) => {
 	});
 });
 
-app.listen(PORT, () => {
+
+
+
+const server = app.listen(PORT, () => {
 	console.log(`App is running at ${PORT}`)
 })
+
+server.keepAliveTimeout = 120000;
+server.headersTimeout = 120000;
+
+
