@@ -24,8 +24,10 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
 	cors({
-		origin: "*",
+		origin: ["https://webdev-u1rb.onrender.com", "http://localhost:3000"],
 		credentials:true,
+		
+
 		
 	})
 )
