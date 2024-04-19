@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
-mongoose.set('bufferCommands', false);
-mongoose.set('autoCreate',false);
+// mongoose.set('bufferCommands', false);
+// mongoose.set('autoCreate',false);
 
 const subSectionSchema = new mongoose.Schema({
      title:{

@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
-mongoose.set('bufferCommands', false);
-mongoose.set('autoCreate',false);
+// mongoose.set('bufferCommands', false);
+// mongoose.set('autoCreate',false);
 
 const categorySchema = new mongoose.Schema({
     name:{

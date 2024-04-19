@@ -26,11 +26,12 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
 	cors({
-		origin: ["http://localhost:3000/","https://webdev-u1rb.onrender.com"],
+		origin: "http://localhost:3000/",
 		credentials:true
 	})
 );
 app.options("*", cors())
+
 
 app.use(
 	fileUpload({
@@ -61,11 +62,11 @@ app.get("/", (req, res) => {
 
 
 
-const server = app.listen(PORT, () => {
+app.listen(PORT, () => {
 	console.log(`App is running at ${PORT}`)
 })
 
-server.keepAliveTimeout = 120000;
-server.headersTimeout = 120000;
+// server.keepAliveTimeout = 120000
+// server.headersTimeout = 120000
 
 
