@@ -196,29 +196,30 @@ exports.getCourseDetails = async (req, res) => {
       });
     }
 
-    const totalDurationInSeconds = courseDetails.courseContent.reduce((accumulator, content) => {
-      return accumulator + content.subSection.reduce((subAccumulator, subSection) => {
-        return subAccumulator + parseInt(subSection.timeDuration);
-      }, 0);
-    }, 0);
+    // const totalDurationInSeconds = courseDetails.courseContent.reduce((accumulator, content) => {
+    //   return accumulator + content.subSection.reduce((subAccumulator, subSection) => {
+    //     return subAccumulator + parseInt(subSection.timeDuration);
+    //   }, 0);
+    // }, 0);
 
-    const totalDuration = convertSecondsToDuration(totalDurationInSeconds)
+    // const totalDuration = convertSecondsToDuration(totalDurationInSeconds)
 
-    let courseProgressCount = await CourseProgress.findOne({
-      courseID: courseId,
-      userId: userId,
-    })
+    // let courseProgressCount = await CourseProgress.findOne({
+    //   courseID: courseId,
+    //   userId: userId,
+    // })
 
-    console.log("courseProgressCount : ", courseProgressCount)
+    // console.log("courseProgressCount : ", courseProgressCount)
     //return response
     return res.status(200).json({
       success: true,
       message: "Course Details fetched successfully",
-      data:{courseDetails, 
-        totalDuration,
-        completedVideo: courseProgressCount?.completedVideo ?
-        courseProgressCount?.completedVideo : [],
-      },
+      // data:{courseDetails, 
+      //   totalDuration,
+      //   completedVideo: courseProgressCount?.completedVideo ?
+      //   courseProgressCount?.completedVideo : [],
+      // },
+      data:courseDetails
     });
   } catch (error) {
     // console.log(error);
