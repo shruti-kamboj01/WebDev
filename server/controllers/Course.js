@@ -166,8 +166,8 @@ exports.getCourseDetails = async (req, res) => {
     //get id
     const { courseId } = req.body;
      // console.log("courseId", courseId)
-    // const userId = req.user.id
-    console.log("user", userId)
+    const userId = req.user.id
+    // console.log("user", userId)
     //find course details
     const courseDetails = await Course.findOne({ _id: courseId, })
       .populate({
