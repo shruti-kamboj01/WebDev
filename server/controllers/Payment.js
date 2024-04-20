@@ -66,10 +66,6 @@ exports.capturePayment = async(req,res) => {
         amount: amount * 100,
         currency,
         receipt: Math.random(Date.now()).toString(),
-        notes:{
-            courses,
-            userId,
-        }
     };
     try{
 //initiate the payment using razorpay

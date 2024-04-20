@@ -55,12 +55,12 @@ export async function BuyCourse(
       }
     );
     
-    // if (!orderResponse.data.success) {
-    //   throw new Error(orderResponse.data.message);
-    // }
+    if (!orderResponse.data.success) {
+      throw new Error(orderResponse.data.message);
+    }
     console.log(
       "PAYMENT RESPONSE FROM BACKEND............",
-      orderResponse.data
+      orderResponse
     );
 
     // Opening the Razorpay SDK
