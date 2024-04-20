@@ -93,7 +93,7 @@ const CourseDetails = () => {
       <div className="bg-richblack-800 py-20 flex">
        <div className='ml-28 w-7/12 max-w-maxContent  relative flex flex-col gap-y-3 border-r-[1px] border-richblack-400'>
        <p className="text-richblack-400 text-xl font-medium">Home/ Learning /
-        <span className='text-yellow-50'> {course?.data?.category?.name}</span></p>
+        <span className='text-yellow-50'> {course?.data?.courseDetails?.category?.name}</span></p>
         <div>
         <p className="text-white text-3xl font-semibold">
             {course?.data?.courseName}
@@ -102,15 +102,15 @@ const CourseDetails = () => {
         {course?.data?.courseDescription}
         </p>
         <p className='text-white text-base font-medium'>
-         Created By- {course?.data?.instructor?.firstName} {course?.data?.instructor?.lastName}</p>
+         Created By- {course?.data?.courseDetails?.instructor?.firstName} {course?.data?.courseDetails?.instructor?.lastName}</p>
         <p className='flex text-white text-base font-medium  gap-x-2 items-center'> 
         <IoInformationCircleOutline />
-        <p>Created At- {formatDate(course?.data?.instructor?.createdAt)}</p>
+        <p>Created At- {formatDate(course?.data?.courseDetails?.instructor?.createdAt)}</p>
         </p>
        </div>
 
        <div className=' flex w-full flex-col gap-4 border-y border-y-richblack-500 py-4'>
-           <p className="space-x-3 pb-4 text-3xl font-semibold text-richblack-5">Rs.{course?.data?.price}</p>
+           <p className="space-x-3 pb-4 text-3xl font-semibold text-richblack-5">Rs.{course?.data?.courseDetails?.price}</p>
            <button className='yellowButton' onClick={()=>handleBuyCourse}>
             Buy Now
            </button>
@@ -122,12 +122,12 @@ const CourseDetails = () => {
       
         <div className='absolute lg:block hidden bg-richblack-700 p-3 px-8 rounded-md right-40  gap-y-3'>
           <div className=''>
-            <img src={course?.data?.thumbnail} alt={course?.data?.courseName}
+            <img src={course?.data?.courseDetails?.thumbnail} alt={course?.data?.courseDetails?.courseName}
               className='w-[240px] h-[150px] object-fit'
             />
           </div>
          <div>
-         <p className="text-white text-xl font-medium"> Rs.{course?.data?.price}</p>
+         <p className="text-white text-xl font-medium"> Rs.{course?.data?.courseDetails?.price}</p>
          </div>
          <div className='flex flex-col gap-y-2'>
           <button className='text-black bg-yellow-50 py-1.5 w-full rounded-md'
@@ -159,7 +159,7 @@ const CourseDetails = () => {
           {/* what you'll learn  */}
       <div className='border-richblack-100 border-[1px] rounded-md mt-10 py-3 px-5 ml-28 w-7/12 max-w-maxContent'>
             <p className='text-white text-2xl font-semibold'>What you'll learn</p>
-            <p className='text-richblack-50 text-base font-medium'> {course?.data?.whatYouWillLearn} </p>
+            <p className='text-richblack-50 text-base font-medium'> {course?.data?.courseDetails?.whatYouWillLearn} </p>
       </div>
 
       {/* course content */}
@@ -167,8 +167,8 @@ const CourseDetails = () => {
         <p className='text-white text-2xl font-semibold'>Course content</p>
        <div className='flex justify-between'>
        <div className='text-richblack-100 flex flex-row gap-x-5'>
-          <li className=''>{course?.data?.courseContent?.length} sections</li>
-          <li>{course?.data?.courseContent[0]?.subSection?.length} lectures</li>
+          <li className=''>{course?.data?.courseDetails?.courseContent?.length} sections</li>
+          {/* <li>{course?.data?.courseContent?.subSection?.length} lectures</li> */}
         </div>
        <details className='flex justify-between'>
       
@@ -176,10 +176,10 @@ const CourseDetails = () => {
           Collapse all section    </summary>
           <details>
             <summary className='flex justify-between'>
-            <p>{course?.data?.courseContent?.map((subsec, i) => (
+            <p>{course?.data?.courseDetails?.courseContent?.map((subsec, i) => (
               <div className='text-white'> {subsec?.sectionName} </div>
             ))}</p>
-              <p>{course?.data?.courseContent[0]?.subSection?.length} lectures</p>
+              {/* <p>{course?.data?.courseContent[0]?.subSection?.length} lectures</p> */}
             </summary>
             <p>
             <HiDesktopComputer />

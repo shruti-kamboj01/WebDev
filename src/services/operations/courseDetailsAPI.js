@@ -301,15 +301,15 @@ export const fetchCourseDetails = async(courseId) => {
    
     console.log("COURSE_DETAILS_API API RESPONSE............", response)
 
-    // if (!response.data.success) {
-    //   throw new Error(response.data.message)
-    // }
+    if (!response.data.success) {
+      throw new Error(response.data.message)
+    }
     result = response.data
-    console.log("result", result)
+    // console.log("result", result)
   } catch (error) {
     console.log("COURSE_DETAILS_API API ERROR............", error)
     result = error.response.data
-    console.log("result", result)
+    // console.log("result", result)
     // toast.error(error.response.data.message);
   }
   toast.dismiss(toastId)
