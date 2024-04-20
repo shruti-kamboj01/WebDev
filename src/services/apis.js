@@ -49,3 +49,9 @@ export const profileEndpoints = {
   //Enrolled courses
   ENROLLED_COURSE_API: BASE_URL + "/profile/getEnrolledCourses"
  }
+
+// PAYMENT API
+export const paymentEndpoints = {
+  CAPTUREPAYMENT_API: BASE_URL + "/payment/capturePayment",
+  VERIFYSIGNATURE_API: BASE_URL + "/payment/verifySignature"
+}

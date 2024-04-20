@@ -4,6 +4,8 @@ const SubSection = require("../models/SubSection");
 const Category = require("../models/Category");
 const User = require("../models/User");
 const { uploadImageToCloudinary } = require("../utils/imageUploader");
+const {convertSecondsToDuration} = require('../utils/secToDuration');
+const CourseProgress = require("../models/CourseProgress");
 
 //Function to create a new course
 exports.createCourse = async (req, res) => {
@@ -163,6 +165,7 @@ exports.getCourseDetails = async (req, res) => {
   try {
     //get id
     const { courseId } = req.body;
+    const userId = req.user.id
     // console.log("id",courseId)
     //find course details
     const courseDetails = await Course.findOne({ _id: courseId, })
@@ -191,11 +194,30 @@ exports.getCourseDetails = async (req, res) => {
         message: `Could not find the course with ${courseId}`,
       });
     }
+
+    const totalDurationInSeconds = courseDetails.courseContent.reduce((accumulator, content) => {
+      return accumulator + content.subSection.reduce((subAccumulator, subSection) => {
+        return subAccumulator + parseInt(subSection.timeDuration);
+      }, 0);
+    }, 0);
+
+    const totalDuration = convertSecondsToDuration(totalDurationInSeconds)
+
+    let courseProgressCount = await CourseProgress.findOne({
+      courseID: courseId,
+      userId: userId,
+    })
+
+    console.log("courseProgressCount : ", courseProgressCount)
     //return response
     return res.status(200).json({
       success: true,
       message: "Course Details fetched successfully",
-      data:courseDetails,
+      data:{courseDetails, 
+        totalDuration,
+        completedVideo: courseProgressCount?.completedVideo ?
+        courseProgressCount?.completedVideo : [],
+      },
     });
   } catch (error) {
     // console.log(error);
@@ -230,8 +252,6 @@ exports.getInstructorCourseDetails = async(req,res) => {
 }
 
 //getFullCourseDetails including courseProgess
-exports.getFullCourseDetails = async (req, res) => {};
-
 exports.deleteCourse = async (req, res) => {
   try {
     const { courseId } = req.body;
