@@ -18,7 +18,7 @@ const CourseDetails = () => {
   const {paymentLoading} = useSelector((state) => state.course)
   const {user} = useSelector((state) => state.profile)
   const dispatch = useDispatch()
-  const {_id} = useParams()
+  // const {_id} = useParams()
 
   const[course, setCourse] = useState([])
   const [confirmationModal, setConfirmationModal] = useState(null);
@@ -38,7 +38,7 @@ const CourseDetails = () => {
  
     const handleBuyCourse = () => {
       if(token) {
-        BuyCourse(token, [_id], user, navigate,dispatch)
+        BuyCourse(token, [courseId], user, navigate,dispatch)
         return
       }
       setConfirmationModal({
