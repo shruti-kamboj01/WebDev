@@ -4,12 +4,17 @@ const User = require("../models/User")
 const mailSender = require("../utils/mailSender")
 const {courseEnrollmentEmail} = require("../mail/templates/emailVerificationTemplate")
 const CourseProgress = require('../models/CourseProgress')
+const {paymentSuccessEmail} = require('../mail/templates/paymentSuccessEmail')
 
 //capture the payment and initate the razorpay order use to initate order
+
 exports.capturePayment = async(req,res) => {
     //get courseId and userId
     //we can buy more than 1 course at a time
+    
     const {courses} = req.body;
+    console.log("course", courses)
+    // console.log(courses)
     const userId = req.user.id; 
     //validations-->
     //1.validate course
@@ -22,6 +27,7 @@ exports.capturePayment = async(req,res) => {
     //2.validate courseDetails and calculate total amount
     let totalAmount = 0;
     for(const course_id of courses) {
+        // console.log(course_id)
         let course;
         try{
            course = await Course.findById(course_id);
@@ -124,6 +130,32 @@ exports.verifySignature = async(req,res) => {
         return res.status(200).json({success: true, message: "Payment Verified"})
     }
     return res.status(200).json({ success: false, message: "Payment Failed" })
+}
+
+
+exports.sendPaymentSuccessEmail = async(req,res) => {
+    const {orderId, paymentId, amount} = req.body
+    const userId = req.user.id
+    
+    try{
+        const enrolledStudent = await User.findById(userId);
+        await mailSender(
+            enrolledStudent.email,
+            `Payment Received`,
+            paymentSuccessEmail(
+                `${enrolledStudent.firstName} ${enrolledStudent.lastName}`,
+                amount/100,
+                orderId,
+                paymentId
+            )
+
+        )
+    }catch (error) {
+        console.log("error in sending mail", error)
+        return res
+          .status(400)
+          .json({ success: false, message: "Could not send email" })
+      }
 }
     
 

@@ -7,7 +7,8 @@ import toast from 'react-hot-toast';
 import { FaRegShareSquare } from "react-icons/fa";
 import  ConfirmationModal  from "../components/common/ConfirmationModal";
 import { HiDesktopComputer } from "react-icons/hi";
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { BuyCourse } from '../services/operations/paymentAPI';
 
 const CourseDetails = () => {
 
@@ -16,6 +17,7 @@ const CourseDetails = () => {
   const {token} = useSelector((state) => state.auth)
   const {paymentLoading} = useSelector((state) => state.course)
   const {user} = useSelector((state) => state.profile)
+  const dispatch = useDispatch()
 
   const[course, setCourse] = useState([])
   const [confirmationModal, setConfirmationModal] = useState(null);
@@ -29,10 +31,13 @@ const CourseDetails = () => {
       getCourseDetails()
     
     },[])
-
+    const {_id} = useParams()
+    console.log("id", _id)
+ 
     const handleBuyCourse = () => {
       if(token) {
-
+        BuyCourse(token, [_id], user, navigate,dispatch)
+        return
       }
       setConfirmationModal({
         text1: "You are not logged in!",
@@ -46,7 +51,7 @@ const CourseDetails = () => {
 
     const addToCart = () => {
       if(token) {
-
+         
       }
       setConfirmationModal({
         text1: "You are not logged in!",
@@ -124,19 +129,19 @@ const CourseDetails = () => {
          </div>
          <div className='flex flex-col gap-y-2'>
           <button className='text-black bg-yellow-50 py-1.5 w-full rounded-md'
-           onClick={ user && course?.data?.studentsEnrolled.includes(user?._id)  ? () => navigate('/dashboard/enrolled-courses') : () =>  handleBuyCourse}>
-            {user && course?.data?.studentsEnrolled.includes(user?._id) 
-            ? "Go To Course" : "Buy Now"}
+           onClick={ handleBuyCourse}>
+            
+            Buy Now
            
           </button>
-          {!user && !course?.data?.studentsEnrolled.includes(user?._id) &&
+          
 
             <button className='text-white bg-richblack-800 border-b-[2px] border-richblack-400 py-1.5 w-full rounded-md'
              onClick={() => addToCart }
                 >
             Add to cart
           </button>
-          }
+          
         
          </div>
          <p className='text-richblack-200 text-sm mx-auto'>30-Day-Money-Back Guarantee</p>

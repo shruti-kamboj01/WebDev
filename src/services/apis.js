@@ -53,5 +53,6 @@ export const profileEndpoints = {
 // PAYMENT API
 export const paymentEndpoints = {
   CAPTUREPAYMENT_API: BASE_URL + "/payment/capturePayment",
-  VERIFYSIGNATURE_API: BASE_URL + "/payment/verifySignature"
+  VERIFYSIGNATURE_API: BASE_URL + "/payment/verifySignature",
+  SEND_PAYMENT_SUCCESS_EMAIL_API: BASE_URL + "/payment/sendPaymentSuccessEmail"
 }
