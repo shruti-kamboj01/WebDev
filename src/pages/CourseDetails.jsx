@@ -18,12 +18,13 @@ const CourseDetails = () => {
   const {paymentLoading} = useSelector((state) => state.course)
   const {user} = useSelector((state) => state.profile)
   const dispatch = useDispatch()
+  const {_id} = useParams()
 
   const[course, setCourse] = useState([])
   const [confirmationModal, setConfirmationModal] = useState(null);
     
   const getCourseDetails = async() => {
-    const result = await fetchCourseDetails(courseId)
+    const result = await fetchCourseDetails(_id)
     setCourse(result)
   }
     useEffect(() => {
@@ -31,7 +32,7 @@ const CourseDetails = () => {
       getCourseDetails()
     
     },[])
-    const {_id} = useParams()
+    
     console.log("id", _id)
  
     const handleBuyCourse = () => {
