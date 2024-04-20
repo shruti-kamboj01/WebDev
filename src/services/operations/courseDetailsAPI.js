@@ -296,7 +296,7 @@ export const fetchCourseDetails = async(courseId) => {
   let result = null
   try {
     const response = await apiConnector("POST", COURSE_DETAILS_API,
-    { courseId,}
+    { courseId}
    )
     console.log("COURSE_DETAILS_API API RESPONSE............", response)
 

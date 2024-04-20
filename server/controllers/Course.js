@@ -219,7 +219,7 @@ exports.getCourseDetails = async (req, res) => {
       //   completedVideo: courseProgressCount?.completedVideo ?
       //   courseProgressCount?.completedVideo : [],
       // },
-      data:courseDetails
+      data: courseDetails,
     });
   } catch (error) {
     // console.log(error);
