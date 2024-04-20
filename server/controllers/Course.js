@@ -165,9 +165,8 @@ exports.getCourseDetails = async (req, res) => {
   try {
     //get id
     const { courseId } = req.body;
-    console.log("courseId", typeof(courseId))
+     console.log("courseId", courseId)
     const userId = req.user.id
-    console.log("id",courseId)
     //find course details
     const courseDetails = await Course.findOne({ _id: courseId, })
       .populate({
