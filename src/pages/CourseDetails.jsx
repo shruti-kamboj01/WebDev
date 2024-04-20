@@ -37,10 +37,10 @@ const CourseDetails = () => {
     // console.log("id", _id)
  
     const handleBuyCourse = () => {
-      if(token) {
-        BuyCourse(token, [courseId], user, navigate,dispatch)
-        return
-      }
+      // if(token) {
+      //   BuyCourse(token, [courseId], user, navigate,dispatch)
+      //   return
+      // }
       setConfirmationModal({
         text1: "You are not logged in!",
         text2:"Please login to Purchase Course.",
