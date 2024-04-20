@@ -22,7 +22,7 @@ const CourseDetails = () => {
 
   const[course, setCourse] = useState([])
   const [confirmationModal, setConfirmationModal] = useState(null);
-    console.log("id",courseId)
+    // console.log("id",courseId)
     
   const getCourseDetails = async() => {
     const result = await fetchCourseDetails(courseId)

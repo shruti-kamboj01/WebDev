@@ -288,7 +288,7 @@ export const deleteCourse = async (data, token) => {
 
 //specific course details
 export const fetchCourseDetails = async(courseId) => {
-  console.log("data is",courseId)
+  // console.log("data is",courseId)
   // console.log("token is",token)
   
   const toastId = toast.loading("Loading...")
