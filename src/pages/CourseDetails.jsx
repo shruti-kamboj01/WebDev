@@ -22,7 +22,7 @@ const CourseDetails = () => {
 
   const[course, setCourse] = useState([])
   const [confirmationModal, setConfirmationModal] = useState(null);
-    
+    console.log("id",_id)
   const getCourseDetails = async() => {
     const result = await fetchCourseDetails(_id)
     setCourse(result)
@@ -33,7 +33,7 @@ const CourseDetails = () => {
     
     },[])
     
-    console.log("id", _id)
+    // console.log("id", _id)
  
     const handleBuyCourse = () => {
       if(token) {

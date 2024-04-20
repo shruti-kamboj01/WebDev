@@ -165,6 +165,7 @@ exports.getCourseDetails = async (req, res) => {
   try {
     //get id
     const { courseId } = req.body;
+    console.log("courseId", courseId)
     const userId = req.user.id
     // console.log("id",courseId)
     //find course details

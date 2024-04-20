@@ -7,7 +7,7 @@ const Course_Card = ({course,Height}) => {
 
   // const {course} = useSelector((state) => state.course)
 
-    console.log('c',course)
+    // console.log('c',course)
     
   return (
     <div className='mt-6 flex flex-col mb-4'>
