@@ -186,7 +186,7 @@ exports.getCourseDetails = async (req, res) => {
       })
       .exec();
 
-      console.log("courseDetails",courseDetails)
+      console.log("courseDetails", courseDetails)
 
     //validations
     if (!courseDetails) {
@@ -204,21 +204,19 @@ exports.getCourseDetails = async (req, res) => {
 
     const totalDuration = convertSecondsToDuration(totalDurationInSeconds)
 
-    let courseProgressCount = await CourseProgress.findOne({
-      courseID: courseId,
-      userId: userId,
-    })
+    // let courseProgressCount = await CourseProgress.findOne({
+    //   courseID: courseId,
+    //   userId: userId,
+    // })
 
-    console.log("courseProgressCount : ", courseProgressCount)
+    // console.log("courseProgressCount : ", courseProgressCount)
     //return response
     return res.status(200).json({
       success: true,
       message: "Course Details fetched successfully",
       data:{courseDetails, 
         totalDuration,
-        completedVideo: courseProgressCount?.completedVideo ?
-        courseProgressCount?.completedVideo : [],
-      },
+        },
   
     });
   } catch (error) {
