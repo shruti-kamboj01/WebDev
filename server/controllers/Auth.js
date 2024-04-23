@@ -256,6 +256,7 @@ exports.changePassword = async (req, res) => {
     //get userdata from req.user
     const userDetails = await User.findById(req.user.id);
 
+
     //get  oldPassword, newPassword, confirmNewPassword
     const { currentPassword, newPassword } = req.body;
     //validation for old password

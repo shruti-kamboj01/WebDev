@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 
 
-const Course_Card = ({course,Height}) => {
+const CourseCard = ({course,Height}) => {
 
   // const {course} = useSelector((state) => state.course)
 
@@ -36,4 +36,4 @@ const Course_Card = ({course,Height}) => {
   )
 }
 
-export default Course_Card
+export default CourseCard

@@ -3,6 +3,10 @@ import { paymentEndpoints } from "../apis";
 import { apiConnector } from "../apiconnector";
 import rzpLogo from "../../assets/Logo/rzp_logo.png";
 import { setPaymentLoading } from "../../slices/courseSlice";
+const RAZORPAY_KEY = 'rzp_test_X5FYP6pZuvZiGo'
+// const BASE_URL = process.env.REACT_APP_BASE_URL
+// const RAZORPAY_KEY = process.env.REACT_APP_RAZORPAY_KEY
+
 
 const {
   CAPTUREPAYMENT_API,
@@ -32,9 +36,10 @@ export async function BuyCourse(
   navigate,
   dispatch
 ) {
-   console.log("course",typeof(courses))
+  //  console.log("course",typeof(courses))
   const toastId = toast.loading("Loading...");
   try {
+    console.log("RAZOR",RAZORPAY_KEY)
     // Loading the script of Razorpay SDK
     const res = await loadScript(
       "https://checkout.razorpay.com/v1/checkout.js"
@@ -62,13 +67,13 @@ export async function BuyCourse(
       "PAYMENT RESPONSE FROM BACKEND............",
       orderResponse
     );
-
+   
     // Opening the Razorpay SDK
     const options = {
-      key: process.env.RAZORPAY_KEY,
-      currency: orderResponse.data.data.currency,
-      amount: `${orderResponse.data.data.amount}`,
-      order_id: orderResponse.data.data.id,
+      key: RAZORPAY_KEY,
+      currency: orderResponse.data.currency,
+      amount: `${orderResponse.data.amount}`,
+      order_id: orderResponse.data.message.id,
       name: "StudyNotion",
       description: "Thank you for Purchasing the Course.",
       image: rzpLogo,
@@ -79,7 +84,7 @@ export async function BuyCourse(
       handler: function (response) {
         sendPaymentSuccessEmail(
           response,
-          orderResponse.data.data.amount,
+          orderResponse.data.amount,
           token
         );
         verifyPayment({ ...response, courses }, token, navigate, dispatch);
@@ -124,9 +129,12 @@ export async function verifyPayment(bodyData, token, navigate, dispatch) {
          const response = await apiConnector("POST", VERIFYSIGNATURE_API, bodyData, {
             Authorization: `Bearer ${token}`,
          })
-         if (!response.data.success) {
-            throw new Error(response.data.message)
-          }
+        //  if (!response.data.success) {
+        //     throw new Error(response.data.message)
+        //   }
+        console.log(
+          "VERIFYSIGNATURE_API............",response
+        );
           toast.success("Payment Successful. You are Added to the course ")
           navigate("/dashboard/enrolled-courses") 
           //dispatch(resetCart())

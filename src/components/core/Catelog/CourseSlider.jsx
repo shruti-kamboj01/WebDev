@@ -6,10 +6,10 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import { Navigation, Pagination } from 'swiper/modules';
-import Course_Card from './Course_Card';
+import CourseCard from './CourseCard';
 
 
-const Course_Slider = ({Courses}) => {
+const CourseSlider = ({Courses}) => {
   
 //  console.log("course",Courses)
 
@@ -27,7 +27,7 @@ const Course_Slider = ({Courses}) => {
    className="mySwiper">
        {Courses?.map((course,i) => (
         <SwiperSlide>
-           <Course_Card course={course} Height={"h-[220px]"}/>
+           <CourseCard course={course} Height={"h-[220px]"}/>
         </SwiperSlide>
        ))}
        
@@ -42,4 +42,4 @@ const Course_Slider = ({Courses}) => {
   )
 }
 
-export default Course_Slider
+export default CourseSlider

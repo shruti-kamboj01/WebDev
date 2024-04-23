@@ -35,6 +35,7 @@ const PublishCourse = () => {
     if(course?.data?.status === COURSE_STATUS.PUBLISHED) {
       setValue("publish", true)
     }
+            // eslint-disable-next-line react-hooks/exhaustive-deps
   },[])
   // console.log("status", course?.status)
 

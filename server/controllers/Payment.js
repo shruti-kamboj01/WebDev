@@ -3,9 +3,10 @@ const mongoose = require("mongoose")
 const Course = require("../models/Course")
 const User = require("../models/User")
 const mailSender = require("../utils/mailSender")
-const {courseEnrollmentEmail} = require("../mail/templates/emailVerificationTemplate")
+const {courseEnrollmentEmail} = require("../mail/templates/courseEnrollmentEmail")
 const CourseProgress = require('../models/CourseProgress')
 const {paymentSuccessEmail} = require('../mail/templates/paymentSuccessEmail')
+const crypto = require("crypto")
 
 //capture the payment and initate the razorpay order use to initate order
 
@@ -14,7 +15,7 @@ exports.capturePayment = async(req,res) => {
     //we can buy more than 1 course at a time
     
     const {courses} = req.body;
-    console.log("course", courses)
+    // console.log("course", courses)
     // console.log(courses)
     const userId = req.user.id; 
     //validations-->
@@ -99,8 +100,9 @@ exports.verifySignature = async(req,res) => {
     const razorpay_payment_id = req.body?.razorpay_payment_id
     const razorpay_signature = req.body?.razorpay_signature
     const courses = req.body?.courses
-
+    // console.log("courseID", courses)
     const userId = req.user.id
+    // console.log("user",userId)
 
   //validations  
   if (
@@ -117,8 +119,8 @@ exports.verifySignature = async(req,res) => {
     let body = razorpay_order_id + "|" + razorpay_payment_id
 
     const generated_signature =  crypto.createHmac("sha256", process.env.RAZORPAY_SECRET)
-                                        .upate(body.toString())
-                                        .digest("hex");
+                                        .update(body.toString())
+                                        .digest("hex")
 
     if (generated_signature == razorpay_signature) {
         //enroll students
@@ -161,7 +163,9 @@ exports.sendPaymentSuccessEmail = async(req,res) => {
 
     //enroll the student in the course
 const enrolledStudents = async (courses, userId, res) => {
-        if(!courses || userId) {
+    // console.log("courses", courses)
+    // console.log("user", userId)
+        if(!courses || !userId) {
             return res
             .status(400)
             .json({ success: false, message: "Please Provide Course ID and User ID" })
@@ -181,7 +185,7 @@ const enrolledStudents = async (courses, userId, res) => {
                       .status(500)
                       .json({ success: false, error: "Course not found" })
                   }
-                  console.log("Updated course: ", enrolledCourse)
+                //   console.log("Updated course: ", enrolledCourse)
 
                   //2.creating course progess
                   const courseProgress = await CourseProgress.create({
@@ -202,7 +206,7 @@ const enrolledStudents = async (courses, userId, res) => {
                     {new: true}
                   )
                   
-                  console.log("Enrolled student: ", enrolledStudent)
+                //   console.log("Enrolled student: ", enrolledStudent)
 
                   //4.send an email notification to the enrolled student
                   const emailResponse = await mailSender(
@@ -213,7 +217,7 @@ const enrolledStudents = async (courses, userId, res) => {
                         `${enrolledCourse.firstName} ${enrolledCourse.lastName}`
                     )
                   )
-                 console.log("Email sent successfully: ", emailResponse.response)
+                //  console.log("Email sent successfully: ", emailResponse.response)
             }catch(error) {
                 console.log(error)
                 return res.status(400).json({ success: false, error: error.message })

@@ -39,7 +39,7 @@ const Navbar = () => {
   }
   useEffect(() => {
      fetchSublinks();
-    
+      // eslint-disable-next-line react-hooks/exhaustive-deps
   },[])
   // console.log("sub links", subLinks)
 

@@ -4,8 +4,8 @@ import { catalogDetailsAPI } from "../services/operations/catalogDetailsAPI";
 import { useParams } from "react-router-dom";
 import { fetchCourseCategories } from "../services/operations/courseDetailsAPI";
 import Error from './Error'
-import Course_Slider from '../components/core/Catelog/Course_Slider'
-import Course_Card from "../components/core/Catelog/Course_Card";
+import CourseSlider from '../components/core/Catelog/CourseSlider'
+import CourseCard from "../components/core/Catelog/CourseCard";
 
 const Catelog = () => {
   const [loading, setLoading] = useState(false);
@@ -28,7 +28,7 @@ const Catelog = () => {
   };
   useEffect(() => {
     fetchCourseCategory();
-
+    // eslint-disable-next-line react-hooks/exhaustive-deps
  },[catalogName])
 
   // fetching catalog page details
@@ -43,6 +43,7 @@ const Catelog = () => {
     if (categoryId) {
       fetchCatelogDetailsPage();
     }
+            // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [categoryId]);
 
 
@@ -80,7 +81,7 @@ const Catelog = () => {
           onClick={()=>setActive(2)}>New</p>
         </div>
         <div>
-          <Course_Slider Courses={catalogPageData?.data?.selectedCategory?.course}/>
+          <CourseSlider Courses={catalogPageData?.data?.selectedCategory?.course}/>
         </div>
       </div>
 
@@ -89,7 +90,7 @@ const Catelog = () => {
           Top courses in{" "} {catalogPageData?.data?.differentCategory?.name} 
         </p>
         <div>
-          <Course_Slider Courses={catalogPageData?.data?.differentCategory?.course}/>
+          <CourseSlider Courses={catalogPageData?.data?.differentCategory?.course}/>
         </div>
       </div>
 
@@ -100,7 +101,7 @@ const Catelog = () => {
         <div>
       
           {catalogPageData?.data?.mostSellingCourses?.slice(0,4).map((course,i) => (
-            <Course_Card course={course} key={i} Height = {"h-[400px]"}/> 
+            <CourseCard course={course} key={i} Height = {"h-[400px]"}/> 
          ))}
         </div>
       </div>

@@ -25,13 +25,13 @@ const CourseDetails = () => {
     // console.log("id",courseId)
     
   const getCourseDetails = async() => {
-    const result = await fetchCourseDetails(courseId)
+    const result = await fetchCourseDetails(courseId,token)
     setCourse(result)
   }
     useEffect(() => {
-        //react-hooks/exhaustive-deps
+       
       getCourseDetails()
-    
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     },[courseId])
     
     // console.log("id", _id)

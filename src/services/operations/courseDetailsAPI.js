@@ -1,6 +1,6 @@
 import { toast } from "react-hot-toast"
 
-import {paymentLoading} from "../../slices/courseSlice"
+// import {paymentLoading} from "../../slices/courseSlice"
 import { apiConnector } from "../apiconnector"
 import { courseEndpoints } from "../apis"
 
@@ -287,7 +287,7 @@ export const deleteCourse = async (data, token) => {
 }
 
 //specific course details
-export const fetchCourseDetails = async(courseId) => {
+export const fetchCourseDetails = async(courseId, token) => {
   // console.log("data is",courseId)
   // console.log("token is",token)
   
@@ -296,7 +296,10 @@ export const fetchCourseDetails = async(courseId) => {
   let result = null
   try {
     const response = await apiConnector("POST", COURSE_DETAILS_API,
-    { courseId}
+    { courseId},
+    {
+      Authorization: `Bearer ${token}`
+    }
    )
    
     console.log("COURSE_DETAILS_API API RESPONSE............", response)

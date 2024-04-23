@@ -19,6 +19,7 @@ const EnrolledCourses = () => {
 
     useEffect(()=> {
         getEnrolledCourses();
+                // eslint-disable-next-line react-hooks/exhaustive-deps
     },[]);
 
   return (
@@ -45,7 +46,7 @@ const EnrolledCourses = () => {
                     enrolledCourses.map((course, i) => (
                         <div key={i}>
                             <div> 
-                            <img src={course.thumbnail}/>
+                            <img src={course.thumbnail} alt={course?.courseName}/>
                             </div>
                             <div> 
                             <h1>{course.courseName}</h1>
