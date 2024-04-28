@@ -119,6 +119,8 @@ exports.signUp = async (req, res) => {
         message: "The OTP is not valid",
       });
     } else if (new Date() > expirationTime) {
+      console.log("res", new Date());
+      console.log("expire", expirationTime);
       await OTP.deleteMany({ email });
       return res.status(400).json({
         success: false,

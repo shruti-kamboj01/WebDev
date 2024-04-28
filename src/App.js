@@ -27,6 +27,7 @@ import EditCourse from "./components/core/Dashboard/EditCourse";
 
 import Catelog from "./pages/Catelog";
 import CourseDetails from "./pages/CourseDetails";
+import MyCart from "./pages/MyCart";
 
 
 
@@ -127,6 +128,11 @@ useEffect(() => {
               <Route 
                 path="dashboard/enrolled-courses"
                 element={<EnrolledCourses/>}
+              />
+
+              <Route 
+                path="dashboard/cart"
+                element={<MyCart/>}
               />
 
              

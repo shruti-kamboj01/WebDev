@@ -6,7 +6,7 @@ import { Link, matchPath } from 'react-router-dom'
 import { useLocation } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import {AiOutlineShoppingCart} from "react-icons/ai"
-import {FiSearch} from "react-icons/fi"
+
 import ProfileDropDown from '../core/Auth/ProfileDropDown'
 import { ACCOUNT_TYPE } from '../../utils/constants'
 import { fetchCourseCategories } from '../../services/operations/courseDetailsAPI'
@@ -117,9 +117,9 @@ const Navbar = () => {
         <div className='flex gap-x-4 items-center'>
              {
               user && user?.accountType !== ACCOUNT_TYPE.INSTRUCTOR && (
-                <Link to="/dashboard/cart" className='relative'>
-                <FiSearch/>
-                <AiOutlineShoppingCart/>
+                <Link to="/dashboard/cart" className='relative flex text-white '>
+               
+                <AiOutlineShoppingCart size={20}/>
                 {
                   totalItems > 0 && (
                     <span>
