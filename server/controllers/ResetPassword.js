@@ -31,7 +31,7 @@ exports.resetPasswordToken = async(req, res) => {
         // console.log("DETAILS", updatedDetails);
 
         //create URL
-        const url = `https://web-dev-green.vercel.app/update-password/${token}`;
+        const url = `https://web-dev-git-main-shruti-kambojs-projects.vercel.app/update-password/${token}`;
 
         //send mail containing the url
         await mailSender(email,
